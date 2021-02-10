@@ -1,3 +1,5 @@
+// Assuming numbers starting from 1,2..................N
+
 #include <iostream>
 using namespace std;
 
