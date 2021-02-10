@@ -3,17 +3,20 @@
 #include<iostream>
 using namespace std;
 
-class QuickUnion{
+class WeightedQuickUnion{
 private:
   int *p;
+  int *size_tree;
   int array_size;
 
 public:
-  QuickUnion(int N){
+  WeightedQuickUnion(int N){
     array_size = N;
     p = new int[N];
+    size_tree = new int[N];
     for(int i=0; i<N; i++){
       *(p+i) = i;
+      *(size_tree + i) = 1;
     }
   }
 
@@ -31,7 +34,14 @@ public:
     else{
       int i = root(num1);
       int j = root(num2);
-      *(p + i) = j;
+      if(*(size_tree + i) > *(size_tree + j)){
+	*(p + j) = i;
+	*(size_tree + i) += *(size_tree + j); 
+      }
+      else{
+	*(p + i) = j;
+	*(size_tree + j) += *(size_tree + i); 
+      }
     }
   }
 
@@ -42,7 +52,8 @@ public:
     return false;
   }
 
-  void allConnectedComponents(){
+
+  void getConnectedComponents(){
     for(int i=0; i< array_size ; i++){
       cout << i << " ";
     }
@@ -54,7 +65,20 @@ public:
     }
   }
 
-  ~QuickUnion(){
+  void getRootNodeSubTreeSize(){
+    cout << "root node sizes" << endl;
+    for(int i=0; i< array_size ; i++){
+      cout << i << " ";
+    }
+
+    cout << "\n";
+    
+    for(int i=0; i< array_size ; i++){
+      cout << *(size_tree+i) << " ";
+    }
+  }
+  
+  ~WeightedQuickUnion(){
     cout << "Freeing up heap memory" << endl;
     delete p;
   }
@@ -62,14 +86,16 @@ public:
 };
 
 int main(){
-  QuickUnion qu(10);
-  qu.makeuUnion(4, 3);
-  qu.makeuUnion(3, 8);
-  qu.makeuUnion(6, 5);
-  qu.makeuUnion(9, 4);
-  qu.makeuUnion(2, 1);
-  cout << qu.connected(3, 9) << endl;
-  qu.allConnectedComponents();
+  WeightedQuickUnion wqu(10);
+  wqu.makeuUnion(4, 3);
+  wqu.makeuUnion(3, 8);
+  wqu.makeuUnion(6, 5);
+  wqu.makeuUnion(9, 4);
+  wqu.makeuUnion(2, 1);
+  cout << wqu.connected(3, 9) << endl;
+  wqu.getConnectedComponents();
+  cout << "\n";
+  wqu.getRootNodeSubTreeSize();
   cout << "\n";
   return 0;
 }
