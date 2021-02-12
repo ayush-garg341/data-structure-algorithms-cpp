@@ -22,6 +22,7 @@ public:
 
   int root(int num1){
     while(num1 != *(p + num1)){
+      *(p+num1) = *(p+ *(p+num1));
       num1 = *(p + num1);
     }
     return num1;
@@ -93,8 +94,12 @@ int main(){
   wqu.makeuUnion(9, 4);
   wqu.makeuUnion(2, 1);
   wqu.makeuUnion(6, 8);
+  cout << "before compressing path " << endl;
+  wqu.getConnectedComponents();
+  cout << "\n";
   cout << wqu.connected(3, 9) << endl;
   cout << wqu.connected(6, 9) << endl;
+  cout << "after compressing path " << endl;
   wqu.getConnectedComponents();
   cout << "\n";
   wqu.getRootNodeSubTreeSize();
