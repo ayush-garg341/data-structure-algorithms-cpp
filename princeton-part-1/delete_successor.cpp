@@ -49,6 +49,22 @@ public:
   int findSuccessor(int num){
     return *(actualList+ root(num+1));
   }
+
+  bool existNum(int num){
+    return num == *(actualList + root(num));
+  }
+
+  void getConnectedComponents(){
+    for(int i=0; i< array_size ; i++){
+      cout << i << " ";
+    }
+
+    cout << "\n";
+    
+    for(int i=0; i< array_size ; i++){
+      cout << *(p+i) << " ";
+    }
+  }
 };
 
 
@@ -61,6 +77,14 @@ int main(){
   
   cout << sd.findSuccessor(3) << endl;
   cout << sd.findSuccessor(8) << endl;
+  cout << sd.existNum(4) << endl;
+  cout << sd.existNum(5) << endl;
+  cout << sd.existNum(6) << endl;
+  cout << sd.existNum(7) << endl;
+  cout << sd.existNum(8) << endl;
+  cout << sd.existNum(9) << endl;
+  sd.getConnectedComponents();
+  cout << endl;
   return 0;
   
 }
