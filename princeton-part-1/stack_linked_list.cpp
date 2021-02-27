@@ -3,14 +3,15 @@
 
 using namespace std;
 
+class Node{
+public:
+  string item;
+  Node* next;
+};
+
 class LinkedListStack{
 private:		   
-  struct Node{
-    string item;
-    struct Node* next;
-  };
-  struct Node* first = NULL;
-
+  Node* first = NULL;
   
 public:
   bool isEmpty(){
@@ -18,7 +19,7 @@ public:
   }
 
   void push(string str){
-    struct Node* tempNode = new Node();
+    Node* tempNode = new Node();
     tempNode->next=first;
     tempNode->item=str;
     first = tempNode;
