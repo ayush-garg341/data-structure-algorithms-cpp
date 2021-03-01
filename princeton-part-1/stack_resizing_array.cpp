@@ -17,6 +17,7 @@ public:
 
   void push(string item){
     if(N==keepCount){
+      // cout << "resizing array ========== " << item << endl;
       keepCount = 2*N;
       resizeArray(2*N);
     }
@@ -48,7 +49,7 @@ public:
 };
 
 int main(){
-  LinkedListResizeArray llArray();
+  LinkedListResizeArray llArray;
 
   cout << llArray.isEmpty() << endl;
 
