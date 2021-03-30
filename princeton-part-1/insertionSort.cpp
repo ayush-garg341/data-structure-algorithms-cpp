@@ -1,24 +1,21 @@
-// selection sort :- from ith entry onwards, check the smallest entry in rest of the array and swap it with ith entry....
+// for the current ith element, check all the elements to left of it and exchange if smaller...
 
 #include<iostream>
 #include <vector>
 
 using namespace std;
 
-class SelectionSort{
-
+class InsertionSort{
+  
 public:
   void sort(vector<int>& nums){
     int array_size = nums.size();
     for(int i =0 ; i<array_size; i++){
-      int min = i;
-      for(int j = i+1; j < array_size; j++){
-	if(isLess(nums[j], nums[min])){
-	  min = j;
+      for(int j = i; j > 0; j--){
+	if(isLess(nums[j], nums[j-1])){
+	  exchange(nums, j, j-1);
 	}
       }
-
-      exchange(nums, i, min);
       
     }
 
@@ -40,14 +37,15 @@ public:
   void printSorted(vector<int>&nums){
     int array_size = nums.size();
     for(int i=0; i< array_size; i++){
-      cout << "element =====>>>>>> " << nums[i] << "\n";
+      cout << "insertion sort element =====>>>>>> " << nums[i] << "\n";
     }
   }
 };
 
 
 int main(){
-  SelectionSort selSort;
-  vector <int> nums = {-10, -20, 30, 5, 10, 4, 8, -5, -15};
-  selSort.sort(nums);
+  InsertionSort insSort;
+  vector <int> nums = {30, 5, 10, 4, 8, 5, 15};
+  insSort.sort(nums);
+  return 0;
 }
