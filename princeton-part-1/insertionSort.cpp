@@ -15,6 +15,9 @@ public:
 	if(isLess(nums[j], nums[j-1])){
 	  exchange(nums, j, j-1);
 	}
+	else{
+	  break;
+	}
       }
       
     }
