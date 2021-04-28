@@ -71,11 +71,15 @@ int main(){
   };
   int low = 0;
   int high = 7;
+  printf("=============== unsorted strings ===================\n");
   for(int i=0; i<7; i++){
     printf("%s ", arr[i]);
   }
   printf("\n");
   MergeSortString(arr, low, high-1, high);
+  
+  printf("=============== sorted strings ===================\n");
+  
   PrintArray(arr, high);
   return 0;
 }
