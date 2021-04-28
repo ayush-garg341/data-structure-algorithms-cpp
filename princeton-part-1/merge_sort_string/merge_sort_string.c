@@ -72,8 +72,9 @@ int main(){
   int low = 0;
   int high = 7;
   for(int i=0; i<7; i++){
-    printf("%s\n", arr[i]);
+    printf("%s ", arr[i]);
   }
+  printf("\n");
   MergeSortString(arr, low, high-1, high);
   PrintArray(arr, high);
   return 0;
