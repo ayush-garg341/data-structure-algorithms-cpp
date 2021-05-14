@@ -7,3 +7,7 @@ void printHeap(int A[], int size);
 void swim(int heap[], int position);
 
 void sink(int heap[], int position);
+
+void swimMin(int heap[], int position);
+
+void sinkMin(int heap[], int position);
