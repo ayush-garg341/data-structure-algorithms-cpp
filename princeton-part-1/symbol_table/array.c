@@ -72,6 +72,33 @@ void printKey(struct st symbol_table[], int size){
 }
 
 
+
+int binarySearch(struct st symbol_table[], char* key_to_find, int low, int high){
+
+  printf("low = %d, high = %d\n", low, high);
+  
+  int middle = ( low + high ) / 2;
+
+  int string_comp = strcmp((char *)symbol_table[middle].key, key_to_find);
+
+  if(low > high){
+    return -1;
+  }
+  
+  if( string_comp == 0 ){
+    return middle;
+  }
+  else if (string_comp < 0){
+    binarySearch(symbol_table, key_to_find, middle+1, high);
+  }
+  else if(string_comp > 0){
+    binarySearch(symbol_table, key_to_find, low, middle-1);
+  }
+  
+}
+
+
+
 int main(){
 
   struct st symbol_table[11];
@@ -90,6 +117,31 @@ int main(){
   sortKeys(symbol_table, 0, 10, 11);
 
   printKey(symbol_table, 11);
+
+  int key_pos = binarySearch(symbol_table, (char *)"fourth", 0, 10);
+
+  if(key_pos==-1){
+    printf("key not found\n");
+    return 0;
+  }
+  
+  printf("key position is %d\n", key_pos+1);
+
+  key_pos = binarySearch(symbol_table, (char *)"third", 0, 10);
+
+  if(key_pos==-1){
+    printf("key not found\n");
+    return 0;
+  }
+  
+  printf("key position is %d\n", key_pos + 1);
+
+
+  key_pos = binarySearch(symbol_table, (char *)"sdhbfdsjhjbwejhbcewjdhew", 0, 10);
+  if(key_pos==-1){
+    printf("key not found\n");
+    return 0;
+  }
   
   return 0;
 }
