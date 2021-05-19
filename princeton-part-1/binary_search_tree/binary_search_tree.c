@@ -52,6 +52,28 @@ struct bst_node* putKeyValue(char *key, int value, struct bst_node* root){
 }
 
 
+
+void level_order_traversal(struct bst_node* root){
+  if(root==NULL){
+    return ;
+  }
+  else{
+    pushQueue(root);
+    while(!queueEmpty()){
+      struct bst_node* front = popQueue();
+      printf("%s ", (char *)front->key);
+      if(front->left_tree!=NULL){
+	pushQueue(front->left_tree);
+      }
+      if(front->right_tree!=NULL){
+	pushQueue(front->right_tree);
+      }
+    }
+  }
+  printf("\n");
+}
+
+
 int main(){
   root = putKeyValue((char*)"h", 1, root);
   root = putKeyValue((char*)"c", 2, root);
@@ -62,6 +84,8 @@ int main(){
   root = putKeyValue((char*)"x", 7, root);
 
   printf("value for key x = %d\n", get((char *)"x"));
+
+  level_order_traversal(root);
   
   return 0;
 }
