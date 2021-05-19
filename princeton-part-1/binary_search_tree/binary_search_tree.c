@@ -74,6 +74,40 @@ void level_order_traversal(struct bst_node* root){
 }
 
 
+
+void pre_order_traversal(struct bst_node* root){
+  if(root==NULL){
+    return;
+  }
+  printf("%s ", (char *)root->key);
+  pre_order_traversal(root->left_tree);
+  pre_order_traversal(root->right_tree);
+}
+
+
+
+void in_order_traversal(struct bst_node* root){
+  if(root == NULL){
+    return;
+  }
+  in_order_traversal(root->left_tree);
+  printf("%s ", (char *)root->key);
+  in_order_traversal(root->right_tree);
+}
+
+
+
+void post_order_traversal(struct bst_node* root){
+  if(root == NULL){
+    return;
+  }
+  post_order_traversal(root->left_tree);
+  post_order_traversal(root->right_tree);
+  printf("%s ", (char *)root->key);
+}
+
+
+
 int main(){
   root = putKeyValue((char*)"h", 1, root);
   root = putKeyValue((char*)"c", 2, root);
@@ -85,7 +119,27 @@ int main(){
 
   printf("value for key x = %d\n", get((char *)"x"));
 
+  printf(" ======= level order traversal ====== \n");
   level_order_traversal(root);
+
+  printf(" ======= pre order traversal ======= \n");
+  
+  pre_order_traversal(root);
+
+  printf("\n");
+
+  printf(" ====== in order traversal / gives sorted list ======= \n");
+
+  in_order_traversal(root);
+
+  printf("\n");
+
+
+  printf(" ======== post order traversal ========= \n");
+
+  post_order_traversal(root);
+
+  printf("\n");
   
   return 0;
 }
