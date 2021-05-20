@@ -52,7 +52,7 @@ struct bst_node* putKeyValue(char *key, int value, struct bst_node* root){
 }
 
 
-struct bst_node * min(struct bst_node* sub_tree){
+struct bst_node* min(struct bst_node* sub_tree){
   if(sub_tree->left_tree==NULL){
     return sub_tree;
   }
@@ -62,6 +62,17 @@ struct bst_node * min(struct bst_node* sub_tree){
   return sub_tree;
 }
 
+
+
+struct bst_node* max(struct bst_node* sub_tree){
+  if(sub_tree->right_tree==NULL){
+    return sub_tree;
+  }
+  while(sub_tree->right_tree!=NULL){
+    sub_tree = sub_tree -> right_tree;
+  }
+  return sub_tree;
+}
 
 
 struct bst_node* deleteKey(char *key, struct bst_node *root){
@@ -116,7 +127,7 @@ void level_order_traversal(struct bst_node* root){
 
 
 
-void pre_order_traversal(struct bst_node* root){
+void pre_order_traversal(struct bst_node *root){
   if(root==NULL){
     return;
   }
@@ -127,7 +138,7 @@ void pre_order_traversal(struct bst_node* root){
 
 
 
-void in_order_traversal(struct bst_node* root){
+void in_order_traversal(struct bst_node *root){
   if(root == NULL){
     return;
   }
@@ -135,7 +146,6 @@ void in_order_traversal(struct bst_node* root){
   printf("%s ", (char *)root->key);
   in_order_traversal(root->right_tree);
 }
-
 
 
 void post_order_traversal(struct bst_node* root){
@@ -147,6 +157,38 @@ void post_order_traversal(struct bst_node* root){
   printf("%s ", (char *)root->key);
 }
 
+
+char * bst_in_order_traversal(struct bst_node* root, char *previous_key){
+  if(root == NULL){
+    return previous_key;
+  }
+  bst_in_order_traversal(root->left_tree, previous_key);
+  char *current_key =  (char *)root->key;
+  int cmp = strcmp(current_key, previous_key);
+  if(cmp >= 0){
+    previous_key = current_key;
+  }
+  else{
+    return previous_key;
+  }
+  bst_in_order_traversal(root->right_tree, previous_key);
+}
+
+
+int is_bst(struct bst_node *root){
+  struct bst_node *minimum_key_node = min(root);
+  char *minimum_key = minimum_key_node -> key;
+  char *is_bst_in_order_traversal = bst_in_order_traversal(root, minimum_key);
+  printf("%s\n", is_bst_in_order_traversal);
+  
+  struct bst_node *max_key_node = max(root);
+  char *max_key = max_key_node -> key;
+  if(strcmp(max_key, is_bst_in_order_traversal)==0){
+    return 1;
+  }
+  return 0;
+ 
+}
 
 
 int main(){
@@ -188,6 +230,8 @@ int main(){
   post_order_traversal(root);
 
   printf("\n");
+
+  printf("binary tree is binary search tree = %d\n", is_bst(root));
   
   return 0;
 }
