@@ -52,6 +52,47 @@ struct bst_node* putKeyValue(char *key, int value, struct bst_node* root){
 }
 
 
+struct bst_node * min(struct bst_node* sub_tree){
+  if(sub_tree->left_tree==NULL){
+    return sub_tree;
+  }
+  while(sub_tree->left_tree!=NULL){
+    sub_tree = sub_tree -> left_tree;
+  }
+  return sub_tree;
+}
+
+
+
+struct bst_node* deleteKey(char *key, struct bst_node *root){
+  int cmp = strcmp((char *)root->key, (char *)key);
+  if(cmp > 0){
+    root->left_tree = deleteKey(key,  root->left_tree);
+  }
+  else if(cmp < 0){
+    root->right_tree = deleteKey(key, root->right_tree);
+  }
+  else{
+    if(root->left_tree == NULL){
+      struct bst_node *right = root->right_tree;
+      free(root);
+      return right;
+    }
+    else if(root->right_tree == NULL){
+      struct bst_node *left = root->left_tree;
+      free(root);
+      return left;
+    }
+    struct bst_node* min_right_tree = min(root->right_tree);
+    root->key = min_right_tree->key;
+    root->value = min_right_tree->value;
+    root->right_tree = deleteKey(min_right_tree->key, root->right_tree);
+
+    return root;
+  }
+}
+
+
 
 void level_order_traversal(struct bst_node* root){
   if(root==NULL){
@@ -116,7 +157,14 @@ int main(){
   root = putKeyValue((char*)"e", 5, root);
   root = putKeyValue((char*)"r", 6, root);
   root = putKeyValue((char*)"x", 7, root);
+  root = putKeyValue((char*)"d", 8, root);
+  root = putKeyValue((char*)"f", 9, root);
+  root = putKeyValue((char*)"g", 10, root);
 
+
+  root = deleteKey((char *)"c", root);
+  
+  
   printf("value for key x = %d\n", get((char *)"x"));
 
   printf(" ======= level order traversal ====== \n");
