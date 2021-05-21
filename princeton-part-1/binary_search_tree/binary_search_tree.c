@@ -4,6 +4,9 @@
 #include "bst.h"
 
 
+int is_tree_bst = 1;
+char *previous_key = (char*)"\0";
+
 struct bst_node* root = NULL;
 
 int get(char *key){
@@ -158,36 +161,34 @@ void post_order_traversal(struct bst_node* root){
 }
 
 
-char * bst_in_order_traversal(struct bst_node* root, char *previous_key){
+void bst_in_order_traversal(struct bst_node* root){
   if(root == NULL){
-    return previous_key;
+    return;
   }
-  bst_in_order_traversal(root->left_tree, previous_key);
+  bst_in_order_traversal(root->left_tree);
   char *current_key =  (char *)root->key;
+  printf("current = %s, previous = %s\n", current_key, previous_key);
   int cmp = strcmp(current_key, previous_key);
   if(cmp >= 0){
     previous_key = current_key;
   }
   else{
-    return previous_key;
+    is_tree_bst = 0;
+    //return;
   }
-  bst_in_order_traversal(root->right_tree, previous_key);
+  bst_in_order_traversal(root->right_tree);
 }
 
 
 int is_bst(struct bst_node *root){
-  struct bst_node *minimum_key_node = min(root);
-  char *minimum_key = minimum_key_node -> key;
-  char *is_bst_in_order_traversal = bst_in_order_traversal(root, minimum_key);
-  printf("%s\n", is_bst_in_order_traversal);
-  
-  struct bst_node *max_key_node = max(root);
-  char *max_key = max_key_node -> key;
-  if(strcmp(max_key, is_bst_in_order_traversal)==0){
+  // struct bst_node *minimum_key_node = min(root);
+  // char *minimum_key = minimum_key_node -> key;
+  bst_in_order_traversal(root);
+
+  if(is_tree_bst==1){
     return 1;
   }
   return 0;
- 
 }
 
 
@@ -232,6 +233,36 @@ int main(){
   printf("\n");
 
   printf("binary tree is binary search tree = %d\n", is_bst(root));
+
+  is_tree_bst = 1;
+  previous_key = (char *)"\0";
+
+  // check for any other binary tree which is not bst
+
+  struct bst_node *root2 = (struct bst_node*)malloc(sizeof(struct bst_node));
+  root2->key = (char*)"d";
+  root2->value = 1;
+  root2->left_tree = NULL;
+  root2->right_tree = NULL;
+
+  struct bst_node *root2_left = (struct bst_node*)malloc(sizeof(struct bst_node));
+  root2_left->key = (char*)"e";
+  root2_left->value = 2;
+  root2_left->left_tree = NULL;
+  root2_left->right_tree = NULL;
+
+  struct bst_node *root2_right = (struct bst_node*)malloc(sizeof(struct bst_node));
+  root2_right->key = (char*)"f";
+  root2_right->value = 3;
+  root2_right->left_tree = NULL;
+  root2_right->right_tree = NULL;
+
+  root2->left_tree = root2_left;
+  root2->right_tree = root2_right;
+  
+  printf("second binary tree is binary search tree = %d\n", is_bst(root2));
+
+  printf("previous key = %s\n", previous_key);
   
   return 0;
 }

@@ -19,4 +19,4 @@ int queueEmpty();
 
 int check_if_bst(struct bst_node *root);
 
-char* bst_in_order_traversal(struct bst_node* root, char *minimum_key);
+void bst_in_order_traversal(struct bst_node* root);
