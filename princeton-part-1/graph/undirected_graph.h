@@ -16,6 +16,12 @@ struct path_nodes{
 };
 
 
+struct queue{
+  int value;
+  struct queue *next_node;
+};
+
+
 void add_edge(int source, int destination);
 
 int degree(int vertex);
@@ -40,5 +46,12 @@ void edgeToVertex(int edge_to[], int num_vertices);
 
 int hasPathTo(int marked[], int vertex);
 
-
 struct path_nodes * pathTo(int marked[], int source, int destination);
+
+void bfs(int source, int marked[], int edge_to[]);
+
+void enqueue(int element);
+
+int dequeue();
+
+int isEmpty();
