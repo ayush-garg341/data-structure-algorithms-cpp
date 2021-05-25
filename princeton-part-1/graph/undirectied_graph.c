@@ -27,12 +27,16 @@ void add_edge(int source, int dest){
 }
 
 
-void adjacent_vertex(int vertex){
+struct adj_node * adjacent_vertex(int vertex){
   struct adj_node *head = adj[vertex];
-  while(head!=NULL){
-    printf("%d ", head->value);
-    head = head -> pointer_to_adj_node;
+  struct adj_node *temp = head;
+  
+  while(temp!=NULL){
+    printf("%d ", temp->value);
+    temp = temp -> pointer_to_adj_node;
   }
+
+  return head;
 }
 
 
@@ -75,21 +79,27 @@ double averageDegree(){
 
 void printGraph(){
   for(int i=0; i < NUM_VERTICES ; i++){
-    printf("vertex ---> %d ", i);
+    printf("vertex ---> %d = ", i);
     adjacent_vertex(i);
     printf("\n");
   }
 }
 
 
-int main(){
 
+struct graph_node * create_graph(){
+
+  struct graph_node *graph_node = (struct graph_node *)malloc(sizeof(struct graph_node));
+
+  graph_node -> vertices = NUM_VERTICES;
+  
   for(int i=0;i < NUM_VERTICES; i++){
     adj[i] = NULL;
   }
+
+  graph_node -> pointer_to_arr =  adj;
   
-  add_edge(0, 5);
-  
+  add_edge(0, 5);  
   add_edge(4, 3);
   add_edge(0, 1);
   add_edge(7, 8);
@@ -101,8 +111,6 @@ int main(){
   add_edge(8, 9);
   add_edge(7, 9);
 
-  printf("total edges = %d\n", num_of_edges());
-  
-  printGraph();
+  return graph_node;
 
 }
