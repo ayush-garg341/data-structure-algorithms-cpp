@@ -50,6 +50,10 @@ int main(){
   
   int edge_to[num_vertices];
 
+  for(int i=0; i < num_vertices; i++){
+    edge_to[i] = -1;
+  }
+
   dfs(first_element, 0, marked, edge_to);
 
   printf("\n");
