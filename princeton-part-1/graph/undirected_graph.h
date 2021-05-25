@@ -9,6 +9,13 @@ struct graph_node{
   struct adj_node **pointer_to_arr;
 };
 
+
+struct path_nodes{
+  int node;
+  struct path_nodes *next_node;
+};
+
+
 void add_edge(int source, int destination);
 
 int degree(int vertex);
@@ -30,3 +37,8 @@ void dfs(struct adj_node *adj_node, int source, int marked[], int edge_to[]);
 void printVisitedNodes(int marked[], int num_vertices);
 
 void edgeToVertex(int edge_to[], int num_vertices);
+
+int hasPathTo(int marked[], int vertex);
+
+
+struct path_nodes * pathTo(int marked[], int source, int destination);

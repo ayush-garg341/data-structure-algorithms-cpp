@@ -36,6 +36,35 @@ void edgeToVertex(int edge_to[], int num_vertices){
 }
 
 
+int hasPathTo(int marked[], int vertex){
+  return marked[vertex];
+}
+
+
+
+struct path_nodes * pathTo(int edge_to[], int source, int destination){
+  int temp_path = edge_to[destination];
+  struct path_nodes *head = NULL;
+  struct path_nodes *path_node = (struct path_nodes*)malloc(sizeof(struct path_nodes));
+  path_node -> node = destination;
+  path_node -> next_node = head;
+  head = path_node;
+  while(temp_path!=source){
+    struct path_nodes *path_node2 = (struct path_nodes*)malloc(sizeof(struct path_nodes));
+    path_node2 -> node = temp_path;
+    path_node2 -> next_node = head;
+    head = path_node2;
+    temp_path = edge_to[temp_path];
+  }
+  struct path_nodes *path_node3 = (struct path_nodes*)malloc(sizeof(struct path_nodes));
+  path_node3 -> node = temp_path;
+  path_node3 -> next_node = head;
+  head = path_node3;
+  return head;
+}
+
+
+
 int main(){
   struct graph_node *graph_node = create_graph();
   int num_vertices = graph_node -> vertices;
@@ -54,7 +83,11 @@ int main(){
     edge_to[i] = -1;
   }
 
-  dfs(first_element, 0, marked, edge_to);
+  int source = 0;
+
+  int destination = 5;
+  
+  dfs(first_element, source, marked, edge_to);
 
   printf("\n");
 
@@ -70,6 +103,16 @@ int main(){
   printf(" ================ Nodes visited from ========================\n");
   
   edgeToVertex(edge_to, num_vertices);
+
+  printf(" ================ has path to ========================\n");
+  printf("There is a path from source = %d to dest = %d =>> %d\n", source, destination, hasPathTo(marked, destination));
+
+  printf("==================== path ====================== \n");
+  struct path_nodes *head = pathTo(edge_to, 0, 3);
+  while(head!=NULL){
+    printf("%d ", head->node);
+    head = head->next_node;
+  }
   
   return 0;
 }
