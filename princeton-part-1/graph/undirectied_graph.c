@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"undirected_graph.h"
-# define NUM_VERTICES 6
+# define NUM_VERTICES 13
 
 struct adj_node *adj[NUM_VERTICES];
 
@@ -122,6 +122,21 @@ struct graph_node * create_graph(){
   add_edge(3, 4);
   add_edge(3, 5);
   add_edge(0, 2);
+
+  /* for connected components */
+  add_edge(0, 5);  
+  add_edge(4, 3);
+  add_edge(0, 1);
+  add_edge(9, 12);
+  add_edge(6, 4);
+  add_edge(5, 4);
+  add_edge(0, 2);
+  add_edge(11, 12);
+  add_edge(9, 10);
+  add_edge(0, 6);
+  add_edge(7, 8);
+  add_edge(9, 11);
+  add_edge(5, 3);
 
   
   return graph_node;

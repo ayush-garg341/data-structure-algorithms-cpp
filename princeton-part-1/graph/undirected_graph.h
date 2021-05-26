@@ -55,3 +55,7 @@ void enqueue(int element);
 int dequeue();
 
 int isEmpty();
+
+void dfs_cc(int source, int marked[], int id[], int count);
+
+void printCCNodes(int id[], int num_vertices);
