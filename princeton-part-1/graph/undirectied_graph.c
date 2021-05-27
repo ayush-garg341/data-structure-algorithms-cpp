@@ -100,43 +100,43 @@ struct graph_node * create_graph(){
   graph_node -> pointer_to_arr =  adj;
 
   /* for dfs */
-  /* add_edge(0, 5);   */
-  /* add_edge(4, 3); */
-  /* add_edge(0, 1); */
-  /* add_edge(7, 8); */
-  /* add_edge(0, 6); */
-  /* add_edge(5, 3); */
-  /* add_edge(6, 4); */
-  /* add_edge(5, 4); */
-  /* add_edge(0, 2); */
-  /* add_edge(8, 9); */
-  /* add_edge(7, 9); */
-
-
-  /* for bfs */
-  add_edge(0, 5);  
-  add_edge(2, 4);
-  add_edge(2, 3);
-  add_edge(1, 2);
-  add_edge(0, 1);
-  add_edge(3, 4);
-  add_edge(3, 5);
-  add_edge(0, 2);
-
-  /* for connected components */
-  add_edge(0, 5);  
+  add_edge(0, 5);
   add_edge(4, 3);
   add_edge(0, 1);
-  add_edge(9, 12);
+  add_edge(7, 8);
+  add_edge(0, 6);
+  add_edge(5, 3);
   add_edge(6, 4);
   add_edge(5, 4);
   add_edge(0, 2);
-  add_edge(11, 12);
-  add_edge(9, 10);
-  add_edge(0, 6);
-  add_edge(7, 8);
-  add_edge(9, 11);
-  add_edge(5, 3);
+  add_edge(8, 9);
+  add_edge(7, 9);
+
+
+  /* for bfs */
+  /* add_edge(0, 5);   */
+  /* add_edge(2, 4); */
+  /* add_edge(2, 3); */
+  /* add_edge(1, 2); */
+  /* add_edge(0, 1); */
+  /* add_edge(3, 4); */
+  /* add_edge(3, 5); */
+  /* add_edge(0, 2); */
+
+  /* for connected components */
+  /* add_edge(0, 5);   */
+  /* add_edge(4, 3); */
+  /* add_edge(0, 1); */
+  /* add_edge(9, 12); */
+  /* add_edge(6, 4); */
+  /* add_edge(5, 4); */
+  /* add_edge(0, 2); */
+  /* add_edge(11, 12); */
+  /* add_edge(9, 10); */
+  /* add_edge(0, 6); */
+  /* add_edge(7, 8); */
+  /* add_edge(9, 11); */
+  /* add_edge(5, 3); */
 
   
   return graph_node;

@@ -3,6 +3,8 @@
 #include"undirected_graph.h"
 
 
+struct stack_node *head = NULL;
+
 void dfs(struct adj_node *adj_node, int source, int marked[], int edge_to[]){
   marked[source] = 1;
   struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(source);
@@ -14,6 +16,47 @@ void dfs(struct adj_node *adj_node, int source, int marked[], int edge_to[]){
       edge_to[value] = source;
     }
     ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
+  }
+}
+
+
+void push(int element){
+  struct stack_node *temp = (struct stack_node*)malloc(sizeof (struct stack_node));
+  temp -> value = element;
+  temp -> next_node = head;
+  head = temp;
+}
+
+
+int pop(){
+  struct stack_node *temp = head;
+  int value = temp->value;
+  head = temp->next_node;
+  free(temp);
+  return value;
+}
+
+int isEmpty(){
+  return head == NULL;
+}
+
+
+void dfs_without_recusrion(int source, int marked[], int edge_to[]){
+  marked[source]=1;
+  edge_to[source] = source;
+  push(source);
+  while(!isEmpty()){
+    int element = pop();
+    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element);
+    while(ptr_to_adjacent_nodes!=NULL){
+      int value = ptr_to_adjacent_nodes->value;
+      if(!marked[value]){
+	marked[value] = 1;
+	edge_to[value] = element;
+	push(value);
+      }
+      ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
+    }
   }
 }
 
@@ -87,7 +130,9 @@ int main(){
 
   int destination = 5;
   
-  dfs(first_element, source, marked, edge_to);
+  // dfs(first_element, source, marked, edge_to);
+
+  dfs_without_recusrion(source, marked, edge_to);
 
   printf("\n");
 

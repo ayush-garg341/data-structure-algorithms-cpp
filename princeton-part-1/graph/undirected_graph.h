@@ -22,6 +22,12 @@ struct queue{
 };
 
 
+struct stack_node{
+  int value;
+  struct stack_node *next_node;
+};
+
+
 void add_edge(int source, int destination);
 
 int degree(int vertex);
@@ -59,3 +65,9 @@ int isEmpty();
 void dfs_cc(int source, int marked[], int id[], int count);
 
 void printCCNodes(int id[], int num_vertices);
+
+void dfs_without_recusrion(int source, int marked[], int edge_to[]);
+
+void push(int element);
+
+int pop();
