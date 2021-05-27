@@ -7,7 +7,7 @@ struct stack_node *head = NULL;
 
 void dfs(struct adj_node *adj_node, int source, int marked[], int edge_to[]){
   marked[source] = 1;
-  struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(source);
+  struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(source, 0);
 
   while(ptr_to_adjacent_nodes!=NULL){
     int value = ptr_to_adjacent_nodes->value;
@@ -47,7 +47,7 @@ void dfs_without_recusrion(int source, int marked[], int edge_to[]){
   push(source);
   while(!isEmpty()){
     int element = pop();
-    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element);
+    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element, 0);
     while(ptr_to_adjacent_nodes!=NULL){
       int value = ptr_to_adjacent_nodes->value;
       if(!marked[value]){
@@ -70,7 +70,7 @@ void printVisitedNodes(int marked[], int num_vertices){
 }
 
 
-void edgeToVertex(int edge_to[], int num_vertices){
+void edgeToVertex(int edge_to[], int num_vertices, int levels[]){
   for(int i=0; i< num_vertices; i++){
     printf("node = %d, from = %d\n", i, edge_to[i]);
   }
@@ -115,14 +115,11 @@ int main(){
   struct adj_node *first_element = (struct adj_node *)*ptr_to_arr;
 
   int marked[num_vertices];
-
+  int edge_to[num_vertices];
+  int levels[num_vertices];
+  
   for(int i=0; i < num_vertices; i++){
     marked[i] = 0;
-  }
-  
-  int edge_to[num_vertices];
-
-  for(int i=0; i < num_vertices; i++){
     edge_to[i] = -1;
   }
 
@@ -147,7 +144,7 @@ int main(){
 
   printf(" ================ Nodes visited from ========================\n");
   
-  edgeToVertex(edge_to, num_vertices);
+  edgeToVertex(edge_to, num_vertices, levels);
 
   printf(" ================ has path to ========================\n");
   printf("There is a path from source = %d to dest = %d =>> %d\n", source, destination, hasPathTo(marked, destination));

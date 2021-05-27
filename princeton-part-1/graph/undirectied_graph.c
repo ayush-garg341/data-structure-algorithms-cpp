@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"undirected_graph.h"
-# define NUM_VERTICES 13
+# define NUM_VERTICES 9
 
 struct adj_node *adj[NUM_VERTICES];
 
@@ -27,12 +27,14 @@ void add_edge(int source, int dest){
 }
 
 
-struct adj_node * adjacent_vertex(int vertex){
+struct adj_node * adjacent_vertex(int vertex, int flag){
   struct adj_node *head = adj[vertex];
   struct adj_node *temp = head;
   
   while(temp!=NULL){
-    printf("%d ", temp->value);
+    if(flag==1){
+      printf("%d ", temp->value);
+    }
     temp = temp -> pointer_to_adj_node;
   }
 
@@ -80,7 +82,7 @@ double averageDegree(){
 void printGraph(){
   for(int i=0; i < NUM_VERTICES ; i++){
     printf("vertex ---> %d = ", i);
-    adjacent_vertex(i);
+    adjacent_vertex(i, 1);
     printf("\n");
   }
 }
@@ -100,28 +102,30 @@ struct graph_node * create_graph(){
   graph_node -> pointer_to_arr =  adj;
 
   /* for dfs */
+  /* add_edge(0, 5); */
+  /* add_edge(4, 3); */
+  /* add_edge(0, 1); */
+  /* add_edge(7, 8); */
+  /* add_edge(0, 6); */
+  /* add_edge(5, 3); */
+  /* add_edge(6, 4); */
+  /* add_edge(5, 4); */
+  /* add_edge(0, 2); */
+  /* add_edge(8, 9); */
+  /* add_edge(7, 9); */
+
+
+  /* for bfs */
   add_edge(0, 5);
   add_edge(4, 3);
   add_edge(0, 1);
-  add_edge(7, 8);
   add_edge(0, 6);
   add_edge(5, 3);
   add_edge(6, 4);
   add_edge(5, 4);
   add_edge(0, 2);
-  add_edge(8, 9);
-  add_edge(7, 9);
-
-
-  /* for bfs */
-  /* add_edge(0, 5);   */
-  /* add_edge(2, 4); */
-  /* add_edge(2, 3); */
-  /* add_edge(1, 2); */
-  /* add_edge(0, 1); */
-  /* add_edge(3, 4); */
-  /* add_edge(3, 5); */
-  /* add_edge(0, 2); */
+  add_edge(5, 7);
+  add_edge(7, 8);
 
   /* for connected components */
   /* add_edge(0, 5);   */

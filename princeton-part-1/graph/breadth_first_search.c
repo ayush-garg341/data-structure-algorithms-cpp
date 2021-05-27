@@ -4,30 +4,55 @@
 
 
 struct queue *head = NULL;
+struct queue *tail = NULL;
 
 void enqueue(int element){
-  struct queue *temp_head = head;
   struct queue *temp = (struct queue*)malloc(sizeof(struct queue));
   temp->value = element;
   temp->next_node = NULL;
-  while(temp_head!=NULL){
-    temp_head = temp_head->next_node;
+  if(head==NULL && tail ==NULL){
+    head=tail=temp;
+    return;
   }
-  temp_head = temp;
-  if(head==NULL){
-    head = temp;
-  }
+  tail->next_node = temp;
+  tail = temp;
+  printf("enqueue ==== \n");
+  printQueue();
 };
+
+
+void printQueue(){
+  struct queue *temp = head;
+  while(temp!=NULL){
+    printf("%d -> ", temp->value);
+    temp = temp->next_node;
+  }
+  printf("\n");
+  
+};
+
+
 
 int dequeue(){
   if(head==NULL){
     printf("queue already empty\n");
     return -1;
   }
+  else if(head==tail){
+    struct queue *temp = head;
+    int value = temp->value;
+    head = tail = NULL;
+    free(temp);
+    printf("dequeue ==== \n");
+    printQueue();
+    return value;
+  }
   struct queue *temp = head;
   int value = temp->value;
   head = temp->next_node;
   free(temp);
+  printf("dequeue ==== \n");
+  printQueue();
   return value;
 }
 
@@ -36,18 +61,19 @@ int isEmpty(){
 }
 
 
-void bfs(int source, int marked[], int edge_to[]){
+void bfs(int source, int marked[], int edge_to[], int levels[]){
   marked[source] = 1;
   enqueue(source);
   while(!isEmpty()){
     int element = dequeue();
-    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element);
+    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element, 0);
     while(ptr_to_adjacent_nodes!=NULL){
       int node_value = ptr_to_adjacent_nodes->value;
       if(!marked[node_value]){
 	marked[node_value] = 1;
 	enqueue(node_value);
 	edge_to[node_value] = element;
+	levels[node_value] = levels[element] + 1;
       }
       ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
     }
@@ -57,11 +83,21 @@ void bfs(int source, int marked[], int edge_to[]){
 }
 
 
-void edgeToVertex(int edge_to[], int num_vertices){
+void edgeToVertex(int edge_to[], int num_vertices, int levels[]){
   for(int i=0; i< num_vertices; i++){
-    printf("node = %d, from = %d\n", i, edge_to[i]);
+    printf("node = %d, from = %d, level = %d\n", i, edge_to[i], levels[i]);
   }
   return;
+}
+
+
+void printShortesRoute(int source, int dest, int edge_to[]){
+  if(edge_to[dest]==source){
+    printf("%d -> %d -> ", source, dest);
+    return;
+  }
+  printShortesRoute(source, edge_to[dest], edge_to);
+  printf("%d -> ", dest);
 }
 
 
@@ -72,20 +108,18 @@ int main(){
   //struct adj_node *first_element = (struct adj_node *)*ptr_to_arr;
 
   int marked[num_vertices];
-
+  int edge_to[num_vertices];
+  int levels[num_vertices];
+  
   for(int i=0; i < num_vertices; i++){
     marked[i] = 0;
-  }
-  
-  int edge_to[num_vertices];
-
-  for(int i=0; i < num_vertices; i++){
     edge_to[i] = -1;
+    levels[i] = 0;
   }
 
   int source = 0;
 
-  bfs(source, marked, edge_to);
+  bfs(source, marked, edge_to, levels);
 
   printf("\n");
 
@@ -95,7 +129,10 @@ int main(){
 
   printf(" ================ Nodes visited from ========================\n");
   
-  edgeToVertex(edge_to, num_vertices);
+  edgeToVertex(edge_to, num_vertices, levels);
+
+  printf(" ================= print shortes route =======================\n");
+  printShortesRoute(0, 8, edge_to);
   
   return 0;
 }

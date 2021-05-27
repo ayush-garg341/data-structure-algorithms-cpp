@@ -38,7 +38,7 @@ int num_of_edges();
 
 double averageDegree();
 
-struct adj_node * adjacent_vertex(int vertex);
+struct adj_node * adjacent_vertex(int vertex, int flag);
 
 void printGraph();
 
@@ -48,19 +48,21 @@ void dfs(struct adj_node *adj_node, int source, int marked[], int edge_to[]);
 
 void printVisitedNodes(int marked[], int num_vertices);
 
-void edgeToVertex(int edge_to[], int num_vertices);
+void edgeToVertex(int edge_to[], int num_vertices, int levels[]);
 
 int hasPathTo(int marked[], int vertex);
 
 struct path_nodes * pathTo(int marked[], int source, int destination);
 
-void bfs(int source, int marked[], int edge_to[]);
+void bfs(int source, int marked[], int edge_to[], int levels[]);
 
 void enqueue(int element);
 
 int dequeue();
 
 int isEmpty();
+
+void printQueue();
 
 void dfs_cc(int source, int marked[], int id[], int count);
 
@@ -71,3 +73,5 @@ void dfs_without_recusrion(int source, int marked[], int edge_to[]);
 void push(int element);
 
 int pop();
+
+void printShortesRoute(int source, int dest, int edge_to[]);
