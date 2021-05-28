@@ -75,3 +75,5 @@ void push(int element);
 int pop();
 
 void printShortesRoute(int source, int dest, int edge_to[]);
+
+int hasCycle(int source, int marked[], int edge_to[]);

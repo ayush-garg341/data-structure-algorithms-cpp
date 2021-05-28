@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"undirected_graph.h"
-# define NUM_VERTICES 10
+# define NUM_VERTICES 7
 
 struct adj_node *adj[NUM_VERTICES];
 
@@ -102,18 +102,14 @@ struct graph_node * create_graph(){
   graph_node -> pointer_to_arr =  adj;
 
   /* for dfs */
-  add_edge(0, 5);
-  add_edge(4, 3);
   add_edge(0, 1);
-  add_edge(7, 8);
+  add_edge(0, 2);
   add_edge(0, 6);
+  //add_edge(3, 4);
+  add_edge(0, 3);
   add_edge(5, 3);
   add_edge(6, 4);
-  add_edge(5, 4);
-  add_edge(0, 2);
-  add_edge(8, 9);
-  add_edge(7, 9);
-
+  
 
   /* for bfs */
   /* add_edge(0, 5); */

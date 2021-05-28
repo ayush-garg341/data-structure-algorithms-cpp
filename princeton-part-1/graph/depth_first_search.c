@@ -88,6 +88,32 @@ int hasPathTo(int marked[], int vertex){
 
 
 
+int hasCycle(int source, int marked[], int edge_to[]){
+  push(source);
+  edge_to[source] = source;
+  while(!isEmpty()){
+    int element = pop();
+    if(!marked[element]){
+      marked[element] = 1;
+      struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element, 0);
+      while(ptr_to_adjacent_nodes!=NULL){
+	int value = ptr_to_adjacent_nodes->value;
+	if(!marked[value]){
+	  edge_to[value] = element;
+	  push(value);
+	}
+	else if(marked[value] && edge_to[element]!=value){
+	  return 1;
+	}
+	ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
+      }
+    }
+  }
+  return 0;
+}
+
+
+
 struct path_nodes * pathTo(int edge_to[], int source, int destination){
   int temp_path = edge_to[destination];
   struct path_nodes *head = NULL;
@@ -160,6 +186,15 @@ int main(){
   }
 
   printf("\n");
+
+  /* printf(" ======================= does the graph has cycle ====================\n"); */
+  /* int has = hasCycle(0, marked, edge_to); */
+  /* if(has==0){ */
+  /*   printf("graph does not have cycle\n"); */
+  /* } */
+  /* else{ */
+  /*   printf("graph has cycle\n"); */
+  /* } */
   
   return 0;
 }
