@@ -42,20 +42,23 @@ int isEmpty(){
 
 
 void dfs_without_recusrion(int source, int marked[], int edge_to[]){
-  marked[source]=1;
-  edge_to[source] = source;
+  //marked[source]=1;
+  //edge_to[source] = source;
   push(source);
   while(!isEmpty()){
     int element = pop();
-    struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element, 0);
-    while(ptr_to_adjacent_nodes!=NULL){
-      int value = ptr_to_adjacent_nodes->value;
-      if(!marked[value]){
-	marked[value] = 1;
-	edge_to[value] = element;
-	push(value);
+    if(!marked[element]){
+      marked[element] = 1;
+      struct adj_node *ptr_to_adjacent_nodes = adjacent_vertex(element, 0);
+      while(ptr_to_adjacent_nodes!=NULL){
+	int value = ptr_to_adjacent_nodes->value;
+	if(!marked[value]){
+	  //marked[value] = 1;
+	  edge_to[value] = element;
+	  push(value);
+	}
+	ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
       }
-      ptr_to_adjacent_nodes = ptr_to_adjacent_nodes -> pointer_to_adj_node;
     }
   }
 }
@@ -155,6 +158,8 @@ int main(){
     printf("%d ", head->node);
     head = head->next_node;
   }
+
+  printf("\n");
   
   return 0;
 }
