@@ -102,13 +102,13 @@ struct graph_node * create_graph(){
   graph_node -> pointer_to_arr =  adj;
 
   /* for dfs */
-  add_edge(0, 1);
-  add_edge(0, 2);
-  add_edge(0, 6);
-  //add_edge(3, 4);
-  add_edge(0, 3);
-  add_edge(5, 3);
-  add_edge(6, 4);
+  /* add_edge(0, 1); */
+  /* add_edge(0, 2); */
+  /* add_edge(0, 6); */
+  /* //add_edge(3, 4); */
+  /* add_edge(0, 3); */
+  /* add_edge(5, 3); */
+  /* add_edge(6, 4); */
   
 
   /* for bfs */
@@ -138,6 +138,18 @@ struct graph_node * create_graph(){
   /* add_edge(9, 11); */
   /* add_edge(5, 3); */
 
+
+  /* for euler cycle */
+  add_edge(0, 1);
+  add_edge(0, 2);
+  add_edge(0, 5);
+  add_edge(0, 6);
+  add_edge(1, 2);
+  add_edge(2, 3);
+  add_edge(2, 4);
+  add_edge(3, 4);
+  add_edge(4, 5);
+  add_edge(4, 6);
   
   return graph_node;
 

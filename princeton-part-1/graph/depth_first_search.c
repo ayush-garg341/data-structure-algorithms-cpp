@@ -150,6 +150,7 @@ int main(){
   for(int i=0; i < num_vertices; i++){
     marked[i] = 0;
     edge_to[i] = -1;
+    levels[i] = 0;
   }
 
   int source = 0;

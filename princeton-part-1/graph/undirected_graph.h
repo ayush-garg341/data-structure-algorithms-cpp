@@ -77,3 +77,13 @@ int pop();
 void printShortesRoute(int source, int dest, int edge_to[]);
 
 int hasCycle(int source, int marked[], int edge_to[]);
+
+int hasEulerCycle(int source, int num_vertices);
+
+void eulerCyclePath(int source, struct adj_node *edge_traversed[]);
+
+int search_traversed(int source, int value, struct adj_node *edge_traversed[]);
+
+void make_traversed(int source, int value, struct adj_node *edge_traversed[]);
+
+void printTraversed(struct adj_node *edge_traversed[]);
