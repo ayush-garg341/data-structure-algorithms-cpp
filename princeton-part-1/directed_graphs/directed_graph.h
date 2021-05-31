@@ -47,3 +47,13 @@ void dfs_directed(int source, int marked[], int edge_to[]);
 void printVisitedNodes(int marked[], int num_vertices);
 
 void edgeToVertex(int edge_to[], int num_vertices, int levels[]);
+
+void bfs_directed(int source, int marked[], int edge_to[], int levels[]);
+
+void enqueue(int element);
+
+int dequeue();
+
+int isEmpty();
+
+void printQueue();
