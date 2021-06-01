@@ -26,6 +26,17 @@ int isEmpty(){
 }
 
 
+void makeCycle(int source, int value, int edge_to[]){
+  push(value);
+  push(source);
+  while(edge_to[source]!=value){
+    source = edge_to[source];
+    push(source);
+  }
+  push(value);
+}
+
+
 int checkCycle(int marked[], int edge_to[], int onStack[], int num_vertices){
   for(int i = 0; i < num_vertices; i++){
     int cycle = dfs_cycle(i, marked, edge_to, onStack);
@@ -34,7 +45,6 @@ int checkCycle(int marked[], int edge_to[], int onStack[], int num_vertices){
       return 1;
     }
   }
-
   return 0;
 }
 
@@ -52,11 +62,12 @@ int dfs_cycle(int source, int marked[], int edge_to[], int onStack[]){
     }
     
     if(!marked[value]){
-      dfs_cycle(value, marked, edge_to, onStack);
       edge_to[value] = source;
+      dfs_cycle(value, marked, edge_to, onStack);
     }
     else if (onStack[value]){
       printf("source = %d, value = %d\n", source, value);
+      makeCycle(source, value, edge_to);
       FLAG = 1;
       return FLAG;
     }
@@ -80,7 +91,15 @@ void edgeToVertex(int edge_to[], int num_vertices, int levels[]){
   for(int i=0; i< num_vertices; i++){
     printf("node = %d, from = %d\n", i, edge_to[i]);
   }
-  
+  return;
+}
+
+
+void printCycle(){
+  while(head!=NULL){
+    printf("%d -> ", pop());
+  }
+  printf("\n");
   return;
 }
 
@@ -113,6 +132,8 @@ int main(){
 
   if(cycle==1){
     printf("Graph has cycle\n");
+    printf("Cycle is ---- \n");
+    printCycle();
   }
   else{
     printf("Graph has no cycle\n");
@@ -121,4 +142,5 @@ int main(){
   printf(" ================ Nodes visited from ========================\n");
   
   edgeToVertex(edge_to, num_vertices, levels);
+
 }

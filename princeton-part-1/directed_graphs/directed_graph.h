@@ -65,3 +65,7 @@ int dfs_cycle(int source, int marked[], int edge_to[], int onStack[]);
 int notFoundAdjacent(int source, int adjacentValue);
 
 int isElementAdjacentToValue(int element, int value);
+
+void printCycle();
+
+void makeCycle(int source, int value, int edge_to[]);

@@ -106,8 +106,8 @@ struct graph_node * create_graph(){
   //add_edge(8, 6);
   add_edge(9, 10);
   add_edge(9, 11);
-  add_edge(10, 12);
-  //add_edge(11, 12);
+  //add_edge(10, 12);
+  add_edge(11, 12);
   add_edge(11, 4);
   add_edge(12, 9);
   
