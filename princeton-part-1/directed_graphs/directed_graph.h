@@ -57,3 +57,11 @@ int dequeue();
 int isEmpty();
 
 void printQueue();
+
+int checkCycle(int marked[], int edge_to[], int num_vertices);
+
+int dfs_cycle(int source, int marked[], int edge_to[]);
+
+int notFoundAdjacent(int source, int adjacentValue);
+
+int isElementAdjacentToValue(int element, int value);
