@@ -69,3 +69,9 @@ int isElementAdjacentToValue(int element, int value);
 void printCycle();
 
 void makeCycle(int source, int value, int edge_to[]);
+
+void topologicalOrdering(int marked[], int num_vertices);
+
+void order(int source, int marked[]);
+
+void printOrder();

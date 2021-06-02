@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"directed_graph.h"
-# define NUM_VERTICES 13
+# define NUM_VERTICES 7
 
 struct adj_node *adj[NUM_VERTICES];
 
@@ -88,28 +88,61 @@ struct graph_node * create_graph(){
 
   graph_node -> pointer_to_arr =  adj;
 
-  add_edge(0, 1);
-  add_edge(0, 5);
-  add_edge(2, 3);
-  //add_edge(2, 0);
-  /* add_edge(3, 2); */
+  /* for running dfs */
+  
+  /* add_edge(0, 1); */
+  /* add_edge(0, 5); */
+  /* add_edge(2, 3); */
+  /* //add_edge(2, 0); */
+  /* /\* add_edge(3, 2); *\/ */
+  /* /\* add_edge(3, 5); *\/ */
+  /* add_edge(4, 2); */
+  /* add_edge(4, 3); */
+  /* add_edge(5, 4); */
+  /* add_edge(6, 0); */
+  /* add_edge(6, 8); */
+  /* add_edge(6, 4); */
+  /* add_edge(6, 9); */
+  /* add_edge(7, 9); */
+  /* add_edge(7, 6); */
+  /* //add_edge(8, 6); */
+  /* add_edge(9, 10); */
+  /* add_edge(9, 11); */
+  /* //add_edge(10, 12); */
+  /* add_edge(11, 12); */
+  /* add_edge(11, 4); */
+  /* add_edge(12, 9); */
+
+
+  /* for finding topological sort */
+  /* add_edge(2, 3); */
+  /* add_edge(0, 6); */
+  /* add_edge(0, 1); */
+  /* add_edge(2, 0); */
+  /* add_edge(11, 12); */
+  /* add_edge(9, 12); */
+  /* add_edge(9, 10); */
+  /* add_edge(9, 11); */
   /* add_edge(3, 5); */
-  add_edge(4, 2);
-  add_edge(4, 3);
-  add_edge(5, 4);
-  add_edge(6, 0);
-  add_edge(6, 8);
+  /* add_edge(8, 7); */
+  /* add_edge(5, 4); */
+  /* add_edge(0, 5); */
+  /* add_edge(6, 4); */
+  /* add_edge(6, 9); */
+  /* add_edge(7, 6); */
+
+  /* for finding topological sort 2 */
+  add_edge(0, 5);
+  add_edge(0, 2);
+  add_edge(0, 1);
+  add_edge(3, 6);
+  add_edge(3, 5);
+  add_edge(3, 4);
+  add_edge(5, 2);
   add_edge(6, 4);
-  add_edge(6, 9);
-  add_edge(7, 9);
-  add_edge(7, 6);
-  //add_edge(8, 6);
-  add_edge(9, 10);
-  add_edge(9, 11);
-  //add_edge(10, 12);
-  add_edge(11, 12);
-  add_edge(11, 4);
-  add_edge(12, 9);
+  add_edge(6, 0);
+  add_edge(3, 2);
+  add_edge(1, 4);
   
   return graph_node;
 
