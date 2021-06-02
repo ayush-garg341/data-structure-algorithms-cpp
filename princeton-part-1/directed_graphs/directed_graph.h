@@ -75,3 +75,9 @@ void topologicalOrdering(int marked[], int num_vertices);
 void order(int source, int marked[]);
 
 void printOrder();
+
+void preOrder(int marked[], int num_vertices);
+
+void postOrder(int marked[], int num_vertices);
+
+void post(int source, int marked[]);
