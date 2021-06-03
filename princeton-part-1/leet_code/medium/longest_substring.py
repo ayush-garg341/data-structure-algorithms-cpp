@@ -1,12 +1,16 @@
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
-        char_dict = {};
+        """
+        :type s: str
+        :rtype: int
+        """
+        char_dict = set();
         length = 0;
         for i in range(0, len(s)):
             count = 0
             for j in range(i, len(s)):
-                if not char_dict.has_key(s[j]):
-                    char_dict[s[j]] = 1
+                if not s[j] in char_dict:
+                    char_dict.add(s[j])
                     count += 1
                 else:
                     break;
