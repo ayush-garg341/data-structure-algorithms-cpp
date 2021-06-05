@@ -6,34 +6,32 @@ using namespace std;
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-
+      int forward[nums.size()];
+      int backward[nums.size()];
       vector<int>products;
-      int product = 1;
-      bool zero_exist = false;
-      int count_zeros = 0;
-      for(int i = 0; i < nums.size(); i++){
-	if(nums[i]!=0){
-	  product *= nums[i];
+      for(int i=0; i < nums.size(); i++){
+	if(i==0){
+	  forward[i] = 1;
 	}
 	else{
-	  count_zeros++;
-	  zero_exist = true;
+	  forward[i] = nums[i-1] * forward[i-1];
 	}
+
+	cout << "i = " << i << " forward[i] = " << forward[i] << "\n";
+      }
+
+      for(int i=nums.size()-1; i >= 0; i--){
+	if(i==nums.size()-1){
+	  backward[i] = 1;
+	}
+	else{
+	  backward[i] = nums[i+1] * backward[i+1];
+	}
+	cout << "i = " << i << " backward[i] = " << backward[i] << "\n";
       }
 
       for(int i = 0; i < nums.size(); i++){
-	if(nums[i]!=0 && zero_exist){
-	  products.push_back(0);
-	}
-	else if(nums[i]!=0 && !zero_exist){
-	  products.push_back(product/nums[i]);
-	}
-	else if(nums[i]==0 && count_zeros>1){
-	  products.push_back(0);
-	}
-	else if(nums[i]==0){
-	  products.push_back(product);
-	}
+	products.push_back(forward[i] * backward[i]);
       }
 
       return products;
@@ -43,7 +41,7 @@ public:
 
 int main(){
   Solution soln;
-  vector<int> nums = {0, 0};
+  vector<int> nums = {1,2,3,4};
   vector<int> g1 = soln.productExceptSelf(nums);
   for (auto it = g1.begin(); it != g1.end(); it++)
     cout << *it << " ";
