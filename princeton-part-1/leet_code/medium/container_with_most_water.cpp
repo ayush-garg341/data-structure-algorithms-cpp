@@ -7,19 +7,31 @@ class Solution {
 public:
     int maxArea(vector<int>& height) {
       int maxArea = 0;
-        int area = 0;
-        int size = height.size();
-        
-        for(int i=0; i < size; i++){
-            for(int j=i; j < size; j++){
-	      area = (j-i) * min(height[i], height[j]);
-	      if(area > maxArea){
-		maxArea = area;
-	      }
-            }
-            
-        }
-    
+      int i = 0;
+      int j = height.size() - 1;
+      while(i<j){
+	int area = 0;
+	if(height[i] < height[j]){
+	  area = (j-i) * height[i];
+	  i++;
+	}
+	
+	else if(height[i] > height[j]){
+	  area = (j-i) * height[j];
+	  j--;
+	}
+	else{
+	  area = (j-i) * height[i];
+	  i++;
+	  j--;
+	}
+
+	if(area > maxArea){
+	  maxArea = area;
+	}
+	
+      }
+      
       return maxArea;
       
     }
@@ -28,7 +40,7 @@ public:
 
 int main(){
   Solution soln;
-  vector<int>height = {1,8,6,2,5,4,8,3,7};
+  vector<int>height = {1,2,1};
   int maxArea = soln.maxArea(height);
   cout << "max area = " << maxArea << "\n";
 }
