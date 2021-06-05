@@ -7,29 +7,41 @@ class Solution {
 public:
     int trap(vector<int>& height) {
       int trap_water = 0;
-      for(int i=0; i < height.size(); i++){
-	int leftMax = 0;
-	int rightMax = 0;
-	for(int left = 0; left < i; left++){
-	  if(height[left] > leftMax){
-	    leftMax = height[left];
+      int left = 0;
+      int right = 0;
+      int low = 0;
+      int hi = height.size() - 1;
+
+      while(low < hi){
+	left = max(left, height[low]);
+	right = max(right, height[hi]);
+
+	cout << "left max = " << left << "\n";
+	cout << "right max = " << right << "\n";
+
+	if(left > right){
+	  if(right - height[hi]<=0){
+	    trap_water += 0;
 	  }
-	}
-	for(int right = i+1; right < height.size(); right++){
-	  if(height[right] > rightMax){
-	    rightMax = height[right];
+	  else{
+	    trap_water += right - height[hi];
 	  }
-	}
-	int canHoldWater = min(leftMax, rightMax);
-	int waterAtIndex = canHoldWater - height[i];
-	if(waterAtIndex<=0){
-	  trap_water+=0;
+	  hi--;
 	}
 	else{
-	  trap_water += waterAtIndex;
+	  if(left - height[low] <= 0){
+	    trap_water += 0;
+	  }
+	  else{
+	    trap_water += left - height[low];
+	  }
+	  
+	  low++;
 	}
 	
+	
       }
+      
 
       return trap_water;
       
