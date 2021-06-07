@@ -10,7 +10,7 @@ public:
       sort(nums.begin(), nums.end());
       vector<vector<int>> pairs;
       vector<int>pair;
-
+      
       vector<vector<int>> triplets;
       vector<int>triplet;
       
@@ -48,6 +48,7 @@ public:
 	int sum_pair = - ( pairs[k][0] + pairs[k][1]);
 	int pos = binarySearch(nums, 0, nums.size()-1, sum_pair);
 	if(pos != -1 && pairs[k][2] != pos && pairs[k][3] != pos){
+	  
 	  if(triplet.size()==0){
 	    triplet.push_back(pairs[k][0]);
 	    triplet.push_back(pairs[k][1]);
@@ -58,8 +59,7 @@ public:
 	    triplet[1] = pairs[k][1];
 	    triplet[2] = nums[pos];
 	  }
-
-	    
+	   
 	  triplets.push_back(triplet);
 	    
 	}
