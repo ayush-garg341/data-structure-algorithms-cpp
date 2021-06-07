@@ -18,6 +18,7 @@ public:
       range.push_back(range[0]);
     }
 
+    
     return range;
   }
   
@@ -44,9 +45,12 @@ public:
 	    }
 	  }
 	}
-        
-	binarySearch(arr, l, mid - 1, x, range);
-        binarySearch(arr, mid + 1, r, x, range);
+	if(x <= arr[mid]){
+	  binarySearch(arr, l, mid - 1, x, range);
+	}
+	if(x >= arr[mid]){
+	   binarySearch(arr, mid + 1, r, x, range);
+	 }
     }
   }
   
@@ -54,7 +58,7 @@ public:
 
 int main(){
   Solution soln;
-  vector <int> nums = {5,7,8,8,8,8,8,8,8,8,9,10};
+  vector <int> nums = {1,2,3,4,5,7,9,10,11,12,13,14};
   int target = 8;
   vector <int> range = soln.searchRange(nums, target);
 }
