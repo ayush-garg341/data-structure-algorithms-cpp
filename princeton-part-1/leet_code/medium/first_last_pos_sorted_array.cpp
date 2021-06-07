@@ -10,13 +10,6 @@ public:
     vector<int> range;
     binarySearch(nums, 0, nums.size()-1, target, range);
 
-    if(range.size() == 2  && range[0] > range[1]){
-      int temp = range[0];
-      range[0] = range[1];
-      range[1] = temp;
-    }
-    
-
     if(range.size()==0){
       range.push_back(-1);
       range.push_back(-1);
@@ -36,30 +29,18 @@ public:
         if (arr[mid] == x){
 	  if(range.size()<2){
 	    range.push_back(mid);
+	    if(range.size()==2 && range[1] < range[0]){
+	      int temp = range[0];
+	      range[0] = range[1];
+	      range[1] = temp;
+	    }
 	  }
 	  else{
-	    int larger;
-	    int smaller;
-	    int smallerPos;
-	    int largerPos;
-	    if(range[0] > range[1]){
-	      larger = range[0];
-	      smaller = range[1];
-	      smallerPos = 1;
-	      largerPos = 0;
+	    if(mid < range[0]){
+	      range[0] = mid;
 	    }
-	    else{
-	      larger = range[1];
-	      smaller = range[0];
-	      smallerPos = 0;
-	      largerPos = 1;
-	    }
-
-	    if(mid < smaller){
-	      range[smallerPos] = mid;
-	    }
-	    if(mid > larger){
-	      range[largerPos] = mid;
+	    if(mid > range[1]){
+	      range[1] = mid;
 	    }
 	  }
 	}
