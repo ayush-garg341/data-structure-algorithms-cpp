@@ -9,29 +9,37 @@ using namespace std;
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-      int missing_pos = 0;
-      unordered_map<int, int> umap;
-      unordered_map<int, int>:: iterator itr;
-      for(int i=0; i<nums.size(); i++){
-	umap[nums[i]]++;
-      }
-
-      for (int i=0; i<=nums.size(); i++){
-	int key = i+1;
-	if (umap.find(key) == umap.end()){
-	  missing_pos = key;
-	  break;
+      int n = nums.size();
+      int i = 0;
+      while(i<n){
+	if(nums[i]>=1 && nums[i]<=n && nums[i]!=nums[nums[i]-1]){
+	  swap(nums[i], nums[nums[i] - 1]);
+	}
+	else{
+	  i++;
 	}
       }
 
-      return missing_pos;
+
+      for(int i=0; i<n; i++){
+      	cout << "nums[i] = " << nums[i] << "\n";
+      }
+      
+      for(int i=0; i<n; i++){
+	if(nums[i]!=i+1){
+	  return i+1;
+	}
+      }
+
+      return n+1;
+      
     }
 };
 
 
 int main(){
   Solution soln;
-  vector<int> nums = {};
+  vector<int> nums = {4 ,3,0, 5, 1};
   int missing_pos = soln.firstMissingPositive(nums);
   cout << "misssing positive => " << missing_pos << "\n";
 }
