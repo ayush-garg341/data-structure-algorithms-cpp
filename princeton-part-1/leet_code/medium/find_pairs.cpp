@@ -7,22 +7,19 @@ using namespace std;
 class Solution {
 public:
     int findPairs(vector<int>& nums, int target) {
-      sort(nums.begin(), nums.end());
+      //sort(nums.begin(), nums.end());
       set<vector<int>> set_of_vectors;
       vector<int>pair;
       int count = 0;
       for(int i=0; i < nums.size(); i++){
-	int k = i;
-	int j = nums.size() -1 ;
-	while(k < j){
-	  if(abs(nums[k] - nums[j])==target){
-	    cout << nums[k] << ", " << nums[j] << "\n";
+	for(int j = i+1; j < nums.size(); j++){
+	  if(abs(nums[i] - nums[j])==target){
 	    if(pair.size()==0){
-	      pair.push_back(nums[k]);
+	      pair.push_back(nums[i]);
 	      pair.push_back(nums[j]);
 	    }
 	    else{
-	      pair[0] =  nums[k];
+	      pair[0] =  nums[i];
 	      pair[1] =  nums[j];
 	    }
 
@@ -31,16 +28,9 @@ public:
 	      set_of_vectors.insert(pair);
 	    }
 	    
-	    k++;
-	    j--;
-	  }
-	  else if(abs(nums[k] - nums[j])<target){
-	    k++;
-	  }
-	  else{
-	    j--;
 	  }
 	}
+	
       }
       return count;
     }
