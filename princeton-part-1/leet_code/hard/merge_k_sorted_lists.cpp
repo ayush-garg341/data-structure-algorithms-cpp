@@ -1,51 +1,52 @@
 #include<iostream>
 #include<vector>
 
+class mycmp{
+public:
+  bool operator()(ListNode *a, ListNode *b){
+    return a->val > b->val;
+  }
+};
+
 
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-      ListNode *temp = NULL;
-      int n = lists.size();
 
-      if(n==0){
-	return {};
-      }
+      ListNode * head = nullptr;
+      ListNode * temp = head;
       
-      if(n==1){
-	return lists[0];
+      int k = lists.size();
+      priority_queue <ListNode*, vector<ListNode *>, mycmp> pq;
+      for(int i = 0; i<k; i++){
+	if(lists[i]!=nullptr){
+	  pq.push(lists[i]);
+	}
       }
 
-      temp = lists[0];
-      
-      for(int i = 1; i < n; i++){
-	temp = mergeTwoLists(temp, lists[i]);
+      while(!pq.empty()){
+	ListNode *current = pq.top();
+	pq.pop();
+
+	ListNode *t = new ListNode(current -> val);
+	
+	if(head!=nullptr){
+	  temp -> next = t;
+	  temp = temp -> next;
+	}
+	else{
+	  head = temp = t;
+	}
+
+	if(current->next!=nullptr){
+	  pq.push(current->next);
+	}
+	
       }
 
-      return temp;
+      return head;
       
     }
-
-
-  ListNode* mergeTwoLists(ListNode *list1, ListNode* list2){
-    ListNode *temp = new ListNode;
-    ListNode *ans = temp;
-    while(list1!=NULL && list2 != NULL){
-      if(list1->val < list2->val){
-	temp -> next = list1;
-	list1 = list1->next;
-      }
-      else{
-	temp -> next = list2;
-	list2 = list2->next;	
-      }
-      temp = temp->next;
-    }
-
-    temp -> next = (list1==NULL) ? list2: list1;
-
-    return ans->next;
-  }
   
 };
 
