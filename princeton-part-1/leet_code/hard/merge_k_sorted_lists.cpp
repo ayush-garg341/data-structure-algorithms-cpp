@@ -1,16 +1,16 @@
 #include<iostream>
 #include<vector>
 
-class mycmp{
-public:
-  bool operator()(ListNode *a, ListNode *b){
-    return a->val > b->val;
-  }
-};
-
 
 class Solution {
 public:
+
+  struct mycmp{
+    bool operator()(ListNode *a, ListNode *b){
+      return a->val > b->val;
+    }
+  };
+  
     ListNode* mergeKLists(vector<ListNode*>& lists) {
 
       ListNode * head = nullptr;
