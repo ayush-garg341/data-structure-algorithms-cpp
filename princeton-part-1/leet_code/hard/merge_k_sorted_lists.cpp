@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 
+using namespace std;
 
 class Solution {
 public:
@@ -11,11 +12,11 @@ public:
     }
   };
   
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-
-      ListNode * head = nullptr;
-      ListNode * temp = head;
-      
+  ListNode* mergeKLists(vector<ListNode*>& lists) {
+    
+    ListNode * head = nullptr;
+    ListNode * temp = head;
+    
       int k = lists.size();
       priority_queue <ListNode*, vector<ListNode *>, mycmp> pq;
       for(int i = 0; i<k; i++){
