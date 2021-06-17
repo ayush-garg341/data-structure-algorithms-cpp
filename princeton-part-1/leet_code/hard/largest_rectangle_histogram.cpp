@@ -34,11 +34,6 @@ public:
 	leftMax[i] = ++j;
       }
 
-      for(int j = 0; j < size; j++){
-	cout << " rightMax= " << rightMax[j] << " leftMax = " << leftMax[j] << "\n";
-      }
-
-
       for(int i = 0; i<size; i++){
 	int area = 0;
 	if(leftMax[i] != -1 && rightMax[i] != -1){
