@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -9,40 +10,49 @@ const unsigned int M = 1000000007;
 class Solution {
 public:
     int maxSumMinProduct(vector<int>& nums) {
-      int maxVal=INT_MIN;
+      
+      int size = nums.size();
 
-      vector<int> max_min_products;
+      unsigned long long maxProduct = 0;
+      
+      vector<int>prefix_sum(size+1, 0);
+      
+      stack<int> st;
+      
+      for(int i=0; i<size; i++){
+	prefix_sum[i+1] = prefix_sum[i] + nums[i];
+      }
 
-      for(int i = 0; i< nums.size(); i++){
-	int sum = 0;
-	int minVal = nums[i];
-	int prod = 0;
-	for(int j = i; j < nums.size(); j++){
-	  sum += nums[j];
-	  if(nums[j] < minVal){
-	    minVal = nums[j];
+      nums.push_back(0);
+
+      size = nums.size();
+
+      for(int i = 0; i < size; i++){
+	while(!st.empty() && nums[i] < nums[st.top()]){
+	  int top = st.top();
+	  st.pop();
+	  if(st.empty()){
+	    maxProduct = max(maxProduct,  (unsigned long long)prefix_sum[i]*nums[top]);
 	  }
-	  if(((minVal*sum) % M) > prod ){
-	    prod = (minVal*sum) % M;
-	    max_min_products.push_back(prod);
+	  else{
+	    unsigned long long sum = prefix_sum[i] - prefix_sum[st.top()+1];
+	    maxProduct = max(maxProduct,  (unsigned long long)sum*nums[top]);
 	  }
 	}
+	st.push(i);
+	
       }
       
-      for(int j = 0; j < max_min_products.size(); j++){
-	if(max_min_products[j] > maxVal){
-	  maxVal = max_min_products[j];
-	}
-      }
-      
-      return maxVal ;
+      return maxProduct % M ;
       
     }
 };
 
 int main(){
   Solution soln;
-  vector<int> nums = {1,1,3,2,2,2,1,5,1,5};
+  // vector<int> nums = {1,1,3,2,2,2,1,5,1,5};
+  // vector<int> nums = {1,2,3,2};
+  vector<int> nums = {3,1,5,6,4,2};
   int maxProduct = soln.maxSumMinProduct(nums);
 
   cout << "max product = " << maxProduct << "\n";
