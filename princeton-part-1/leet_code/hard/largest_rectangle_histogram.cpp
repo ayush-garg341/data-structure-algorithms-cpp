@@ -7,7 +7,7 @@ class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
 
-      int maxArea = 0;
+      int maxArea = heights[0];
       
       unsigned int size = heights.size();
       
@@ -17,7 +17,7 @@ public:
       for(int i=0; i<size-1; i++){
 	int currentElement = heights[i];
 	int j = i+1;
-	while(heights[j]>=currentElement && j <= size - 1){
+	while(j <= (size - 1) &&  heights[j]>=currentElement ){
 	  j++;
 	}
 	
@@ -28,7 +28,7 @@ public:
       for(int i=size-1; i > 0; i--){
 	int currentElement = heights[i];
 	int j = i-1;
-	while(heights[j]>=currentElement){
+	while(j>=0 &&  heights[j]>=currentElement){
 	  j--;
 	}
 	leftMax[i] = ++j;
