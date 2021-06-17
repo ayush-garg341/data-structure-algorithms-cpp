@@ -17,46 +17,17 @@ public:
       vector<int> rightMax(size, 0);
 
       calculateMax(heights, size, rightMax);
-
-      for(int i = 0; i < size; i++){
-	cout << "right max = " << rightMax[i] << "\n";
-      }
       
       reverse(heights.begin(), heights.end());
-
-      cout << "============================\n";
-      
-      for(int i = 0; i < size; i++){
-	cout << "height = " << heights[i] << "\n";
-      }
       
       calculateMax(heights, size, leftMax);
-
-      cout << "============================\n";
-      
-      for(int i = 0; i < size; i++){
-	cout << "left max = " << leftMax[i] << "\n";
-      }
-      
       
       reverse(leftMax.begin(), leftMax.end());
 
-      cout << "============================\n";
-      
-      for(int i = 0; i < size; i++){
-	cout << "left max = " << leftMax[i] << "\n";
-      }
       
       for(int i = 0; i < size; i++){
         leftMax[i] = size - 1 - leftMax[i];
       }
-
-      cout << "========================" << "\n";
-      
-      for(int i = 0; i < size; i++){
-	cout << "left max = " << leftMax[i] << "\n";
-      }
-      
       
       reverse(heights.begin(), heights.end());
 
