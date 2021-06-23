@@ -5,57 +5,48 @@
 using namespace std;
 
 class Solution{
+#define ll long long int
+#define p pair<int,int>
 public:
   vector<int> getOrder(vector<vector<int>>& tasks) {
-    typedef pair < int, pair < int, int >>pi;
-    priority_queue <pi, vector<pi>, greater<pi>>enqued_tasks, available_tasks;
+    int i=0;
+    vector<int>res;
+    for(auto &v:tasks)
+      v.push_back(i++);
 
-    vector<int> order;
+    for(int i = 0; i < tasks.size(); i++){
+      cout << "(" << tasks[i][0] << " " << tasks[i][1] <<  " " << tasks[i][2] << ") "; 
+    }
+
+    cout << endl;
     
-    int size = tasks.size();
-
-    for(int i = 0; i< size; i++){
-      enqued_tasks.push(make_pair(tasks[i][0], make_pair(tasks[i][1], i)));
-    }
-
-    int current_time=0;
-
-    while(!enqued_tasks.empty()){
-
-      current_time = max(current_time, enqued_tasks.top().first);
-      
-      if(available_tasks.size() > 0){
-	if(order.size() == 0){
-	  order.push_back(available_tasks.top().second.second);
-	  available_tasks.pop();
-	}
-	else if(current_time < (tasks[order.back()][0] + tasks[order.back()][1])){
-	  pi  top = enqued_tasks.top();
-	  available_tasks.push(make_pair(top.second.first, make_pair(top.second.first, top.second.second)));
-	  enqued_tasks.pop();
-	}
-	else if(current_time >= (tasks[order.back()][0] + tasks[order.back()][1])){
-	  pi top = enqued_tasks.top();
-	  available_tasks.push(make_pair(top.second.first, make_pair(top.second.first, top.second.second)));
-	  enqued_tasks.pop();
-	  order.push_back(available_tasks.top().second.second);
-	  available_tasks.pop();
-	}
-      }
-      else{
-	pi  top = enqued_tasks.top();
-	available_tasks.push(make_pair(top.second.first, make_pair(top.second.first, top.second.second)));
-	enqued_tasks.pop();
-      }
-    }
-
-    while(!available_tasks.empty()){
-      order.push_back(available_tasks.top().second.second);
-      available_tasks.pop();
-    }
-
-    return order;
+    sort(tasks.begin(),tasks.end());
     
+    for(int i = 0; i < tasks.size(); i++){
+      cout << "(" << tasks[i][0] << " " << tasks[i][1] <<  " " << tasks[i][2] << ") "; 
+    }
+
+    cout << endl;
+    
+    priority_queue<p,vector<p>,greater<p>>pq;
+    ll time=tasks[0][0];i=0;
+    while(i<tasks.size() || !pq.empty())
+      {
+	while(i<tasks.size() && tasks[i][0]<=time)
+	  {
+	    pq.push({tasks[i][1],tasks[i][2]});
+	    i++;
+	  }
+	if(pq.empty())
+	  {
+	    time=tasks[i][0];
+	    continue;
+	  }
+	res.push_back(pq.top().second);
+	time+=pq.top().first;
+	pq.pop();
+      }
+    return res;
   };
 };
 
@@ -63,7 +54,10 @@ public:
 int main(){
 
   Solution soln;
-  vector<vector<int>>tasks = {{7,10},{7,12},{7,5},{7,4},{7,2}};
+  //vector<vector<int>>tasks = {{7,10},{7,12},{7,5},{7,4},{7,2}};
+
+  vector<vector<int>> tasks = {{35,36},{11,7},{15,47},{34,2},{47,19},{16,14},{19,8},{7,34},{38,15},{16,18},{27,22},{7,15},{43,2},{10,5},{5,4},{3,11}};
+  
   vector<int> order = soln.getOrder(tasks);
 
   for(int i = 0; i < order.size(); i++){
