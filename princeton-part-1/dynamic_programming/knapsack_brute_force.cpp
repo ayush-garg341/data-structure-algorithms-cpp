@@ -6,26 +6,25 @@ using namespace std;
 class Knapsack {
 public:
   int solveKnapsack(const vector<int> &profits, const vector<int> &weights, int capacity) {
-    if(capacity==0){
+    return this->solveKnapsackRecursive(profits, weights, capacity, 0);
+  }
+
+  int solveKnapsackRecursive(const vector<int> &profits, const vector<int> &weights, int capacity, int currentIndex){
+    if(capacity<=0 || currentIndex >= profits.size()){
       return 0;
     }
-    int max_profit = 0;
-    int size = profits.size();
-    int profit = 0;
+
+    int profit1 = 0;
     
-    for(int i = 0; i < size-1; i++){
-      for(int j = i+1; j < size ; j++){
-	if(weights[i] + weights[j] <= capacity){
-	  profit = profits[i] + profits[j];
-	  if(profit > max_profit){
-	    max_profit = profit;
-	  }
-	}
-      }
+    if(weights[currentIndex] <= capacity){
+      profit1 = profits[currentIndex] + solveKnapsackRecursive(profits, weights, capacity - weights[currentIndex], currentIndex + 1);
     }
-    
-    return max_profit;
+
+    int profit2  = solveKnapsackRecursive(profits, weights, capacity, currentIndex + 1);
+
+    return max(profit1, profit2);
   }
+  
 };
 
 int main(int argc, char *argv[]) {
