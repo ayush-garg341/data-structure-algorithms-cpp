@@ -5,12 +5,15 @@ using namespace std;
 class SubsetSum {
 public:
   bool canPartition(const vector<int> &num, int sum) {
-    bool can = canPartitionRecursive(num, sum, 0);
+
+    vector<vector<int>>dp(num.size(), vector<int>(sum+1, -1));
+    
+    bool can = canPartitionRecursive(dp, num, sum, 0);
     return can;
   }
 
 private:
-  bool canPartitionRecursive(const vector<int> &num, int sum, int currentIndex){
+  bool canPartitionRecursive(vector<vector<int>>dp , const vector<int> &num, int sum, int currentIndex){
     if(sum==0){
       return true;
     }
@@ -19,13 +22,18 @@ private:
       return false;
     }
 
-    if(num[currentIndex] <= sum){
-      if(canPartitionRecursive(num, sum - num[currentIndex], currentIndex + 1)){
-	return true;
+    if(dp[currentIndex][sum]==-1){
+      if(num[currentIndex] <= sum){
+	if(canPartitionRecursive(dp, num, sum - num[currentIndex], currentIndex + 1)){
+	  dp[currentIndex][sum] = 1;
+	  return true;
+	}
       }
     }
 
-    return canPartitionRecursive(num, sum, currentIndex + 1);
+    dp[currentIndex][sum] = canPartitionRecursive(dp, num, sum, currentIndex + 1) ? 1 : 0;
+    
+    return dp[currentIndex][sum]==1 ? true: false;
     
   }
   
