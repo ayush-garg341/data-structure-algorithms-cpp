@@ -5,22 +5,33 @@ using namespace std;
 
 class PartitionSet {
 public:
-  int canPartition(const vector<int> &num) { 
-    int mim = canPartitionRecursive(num, 0, 0, 0);
+  int canPartition(const vector<int> &num) {
+    int sum = 0;
+
+    for(int i =0; i<num.size(); i++){
+      sum += num[i];
+    }
+    
+    vector<vector<int>>dp(num.size(), vector<int>(sum +1, -1));
+    int mim = canPartitionRecursive(dp, num, sum,  0, 0, 0);
     return mim; 
   }
 
 private:
-  int canPartitionRecursive(const vector<int> &num, int sum1, int sum2, int currentIndex){
+  int canPartitionRecursive(vector<vector<int>>dp, const vector<int> &num, int sum,  int sum1, int sum2, int currentIndex){
     if(currentIndex == num.size()){
       return abs(sum1 - sum2);
     }
 
-    int diff1 = canPartitionRecursive(num, sum1+num[currentIndex], sum2, currentIndex+1);
+    if(dp[currentIndex][sum1]==-1){
+      int diff1 = canPartitionRecursive(dp, num, sum, sum1+num[currentIndex], sum2, currentIndex+1);
 
-    int diff2 = canPartitionRecursive(num, sum1, sum2+num[currentIndex], currentIndex+1);
+      int diff2 = canPartitionRecursive(dp, num, sum, sum1, sum2+num[currentIndex], currentIndex+1);
 
-    return min(diff1, diff2);
+      dp[currentIndex][sum1] = min(diff1, diff2);
+    }
+    
+    return dp[currentIndex][sum1];
   }
   
 };
