@@ -6,12 +6,13 @@ using namespace std;
 class SubsetSum {
 public:
   int countSubsets(const vector<int> &num, int sum) {
-    int count = countSubsetsRecursive(num, sum, 0);
+    vector<vector<int>>dp(num.size(), vector<int>(sum+1, -1));
+    int count = countSubsetsRecursive(dp, num, sum, 0);
     return count;
   }
 
 private:
-  int countSubsetsRecursive(const vector<int>num, int sum, int currentIndex){
+  int countSubsetsRecursive(vector<vector<int>>dp, const vector<int>num, int sum, int currentIndex){
     if(sum==0){
       return 1;
     }
@@ -20,13 +21,15 @@ private:
     }
 
     int count = 0;
-    if(num[currentIndex] <= sum){
-      count += countSubsetsRecursive(num, sum-num[currentIndex], currentIndex+1);
+    if(dp[currentIndex][sum]==-1){
+      if(num[currentIndex] <= sum){
+	count += countSubsetsRecursive(dp, num, sum-num[currentIndex], currentIndex+1);
+      }
+      count += countSubsetsRecursive(dp, num, sum, currentIndex + 1);
+      dp[currentIndex][sum] = count;
     }
 
-    count += countSubsetsRecursive(num, sum, currentIndex + 1);
-
-    return count;
+    return dp[currentIndex][sum];
     
   }
   
