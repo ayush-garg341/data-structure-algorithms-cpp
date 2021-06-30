@@ -23,15 +23,17 @@ private:
       return 0;
     }
 
-    int count = 0;
-    if(dp[currentIndex][total]==-1){
-      if(denominations[currentIndex] <= total){
-	count += countChangeRecursive(dp, denominations, total - denominations[currentIndex], currentIndex);
-      }
-      count += countChangeRecursive(dp, denominations, total, currentIndex + 1);
-
-      dp[currentIndex][total] = count;
+    if(dp[currentIndex][total]!=-1){
+      return dp[currentIndex][total];
     }
+
+    int sum1 = 0;
+    if(denominations[currentIndex] <= total){
+      sum1 = countChangeRecursive(dp, denominations, total - denominations[currentIndex], currentIndex);
+    }
+    int sum2 = countChangeRecursive(dp, denominations, total, currentIndex + 1);
+ 
+    dp[currentIndex][total] = sum1 + sum2;   
     return dp[currentIndex][total];
   }
   
