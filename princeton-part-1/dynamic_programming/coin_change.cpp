@@ -6,12 +6,15 @@ using namespace std;
 class CoinChange {
 public:
   int countChange(const vector<int> &denominations, int total) {
-    int count = countChangeRecursive(denominations, total, 0);
+
+    vector<vector<int>>dp(denominations.size(), vector<int>(total+1, -1));
+    
+    int count = countChangeRecursive(dp, denominations, total, 0);
     return count;
   }
 
 private:
-  int countChangeRecursive(const vector<int> &denominations, int total, int currentIndex){
+  int countChangeRecursive(vector<vector<int>>dp, const vector<int> &denominations, int total, int currentIndex){
     if(total==0){
       return 1;
     }
@@ -21,13 +24,15 @@ private:
     }
 
     int count = 0;
-    if(denominations[currentIndex] <= total){
-      count += countChangeRecursive(denominations, total - denominations[currentIndex], currentIndex);
+    if(dp[currentIndex][total]==-1){
+      if(denominations[currentIndex] <= total){
+	count += countChangeRecursive(dp, denominations, total - denominations[currentIndex], currentIndex);
+      }
+      count += countChangeRecursive(dp, denominations, total, currentIndex + 1);
+
+      dp[currentIndex][total] = count;
     }
-
-    count += countChangeRecursive(denominations, total, currentIndex + 1);
-
-    return count;
+    return dp[currentIndex][total];
   }
   
 };
