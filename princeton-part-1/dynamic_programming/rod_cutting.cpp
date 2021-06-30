@@ -7,25 +7,32 @@ class RodCutting {
 
 public:
   int solveRodCutting(const vector<int> &lengths, vector<int> &prices, int n) {
-    int profit = solveRodCuttingRecursive(lengths, prices, n, 0);
+    vector<vector<int>> dp(prices.size(), vector<int>(n + 1, -1));
+    int profit = solveRodCuttingRecursive(dp, lengths, prices, n, 0);
     return profit;
   }
 
 private:
-  int solveRodCuttingRecursive(const vector<int> &lengths, vector<int> &prices, int n, int currentIndex){
+  int solveRodCuttingRecursive(vector<vector<int>>dp, const vector<int> &lengths, vector<int> &prices, int n, int currentIndex){
 
     if(n<=0 || currentIndex >= prices.size()){
       return 0;
     }
+
+    if(dp[currentIndex][n]!=-1){
+      return dp[currentIndex][n];
+    }
     
     int profit1 = 0;
     if( n >= lengths[currentIndex]){
-      profit1 = prices[currentIndex] + solveRodCuttingRecursive(lengths, prices, n-lengths[currentIndex], currentIndex);
+      profit1 = prices[currentIndex] + solveRodCuttingRecursive(dp, lengths, prices, n-lengths[currentIndex], currentIndex);
     }
 
-    int profit2 = solveRodCuttingRecursive(lengths, prices, n, currentIndex + 1);
+    int profit2 = solveRodCuttingRecursive(dp, lengths, prices, n, currentIndex + 1);
 
-    return max(profit1, profit2);
+    dp[currentIndex][n] = max(profit1, profit2);
+    
+    return dp[currentIndex][n];
     
   }
   
