@@ -24,8 +24,6 @@ public:
 	    dp[i][j] = max(dp[i][j], 1 + dp[i][j-ribbonLengths[i]]);
 	  }
 	}
-
-	cout << " i = " << i << " j = " << j << " " << dp[i][j] << endl;
       }
     }
     
