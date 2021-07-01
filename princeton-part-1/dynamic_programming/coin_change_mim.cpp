@@ -8,12 +8,14 @@ class CoinChange {
 
 public:
   int countChange(const vector<int> &denominations, int total) {
-    int result = this->countChangeRecursive(denominations, total, 0);
+    int d = denominations.size();
+    vector<vector<int>>dp(d, vector<int>(total+1));
+    int result = this->countChangeRecursive(dp, denominations, total, 0);
     return (result == numeric_limits<int>::max() ? -1 : result);
   }
 
 private:
-  int countChangeRecursive(const vector<int> &denominations, int total, int currentIndex) {
+  int countChangeRecursive(vector<vector<int>>dp,  const vector<int> &denominations, int total, int currentIndex) {
     // base check
     if (total == 0) {
       return 0;
@@ -23,20 +25,20 @@ private:
       return numeric_limits<int>::max();
     }
 
-    // recursive call after selecting the coin at the currentIndex
-    // if the coin at currentIndex exceeds the total, we shouldn't process this
-    int count1 = numeric_limits<int>::max();
-    if (denominations[currentIndex] <= total) {
-      int res =
-	countChangeRecursive(denominations, total - denominations[currentIndex], currentIndex);
-      if (res != numeric_limits<int>::max()) {
-        count1 = res + 1;
+    if(!dp[currentIndex][total]){
+      int count1 = numeric_limits<int>::max();
+      if (denominations[currentIndex] <= total) {
+	int res =
+	  countChangeRecursive(dp, denominations, total - denominations[currentIndex], currentIndex);
+	if (res != numeric_limits<int>::max()) {
+	  count1 = res + 1;
+	}
       }
-    }
     
-    // recursive call after excluding the coin at the currentIndex
-    int count2 = countChangeRecursive(denominations, total, currentIndex + 1);
-    return min(count1, count2);
+      int count2 = countChangeRecursive(dp, denominations, total, currentIndex + 1);
+      dp[currentIndex][total] = min(count1, count2);
+    }
+    return dp[currentIndex][total];
   }
 };
 
