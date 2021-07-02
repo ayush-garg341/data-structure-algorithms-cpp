@@ -11,16 +11,16 @@ public:
       return 0;
     }
     
-    vector<int>dp(3);
-    dp[0] = 0;
-    dp[1] = 1;
-    for(int i = 2; i <= n; i++){
-
-      dp[i] = dp[i-1] + dp[i-2];
-      
+    int n1, n2, temp;
+    n1 = 0;
+    n2 = 1;
+    for(int i = 2 ; i<=n; i++){
+      temp = n1 + n2;
+      n1 = n2;
+      n2 = temp;
     }
 
-    return dp[n];
+    return temp;
     
   }
   
