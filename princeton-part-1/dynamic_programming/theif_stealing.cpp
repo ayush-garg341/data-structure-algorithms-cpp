@@ -5,26 +5,35 @@ using namespace std;
 
 class HouseThief {
 public:
-  int findMaxSteal(const vector<int> &wealth) { 
-    int result = findMaxStealReursive(wealth, 0);
+  int findMaxSteal(const vector<int> &wealth) {
+
+    vector<int>dp(wealth.size());
+    
+    int result = findMaxStealReursive(dp, wealth, 0);
     return result; 
   }
 
 
-  int findMaxStealReursive(const vector<int> &wealth, int currentIndex){
+  int findMaxStealReursive(vector<int>dp, const vector<int> &wealth, int currentIndex){
     if(currentIndex >= wealth.size()){
       return 0;
     }
 
+    if(dp[currentIndex]){
+      return dp[currentIndex];
+    }
+
     
-    int steal1 = wealth[currentIndex] + findMaxStealReursive(wealth, currentIndex + 2);
+    int steal1 = wealth[currentIndex] + findMaxStealReursive(dp, wealth, currentIndex + 2);
 
     // The below line might give heap buffer overflow.
     // int steal2 = wealth[currentIndex+1] + findMaxStealReursive(wealth, currentIndex + 3);
 
-    int steal2 = findMaxStealReursive(wealth, currentIndex+1);
+    int steal2 = findMaxStealReursive(dp, wealth, currentIndex+1);
+
+    dp[currentIndex] = max(steal1, steal2);
     
-    return max(steal1, steal2);
+    return dp[currentIndex];
   }
   
 };
