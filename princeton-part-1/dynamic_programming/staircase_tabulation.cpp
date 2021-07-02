@@ -6,25 +6,32 @@ using namespace std;
 class Staircase {
 public:
   int CountWays(int n) {
-    vector<int>dp(n+1, 0);
-    dp[0] = 1;
-    dp[1] = 1;
-    dp[2] = 2;
+
+    int n1, n2, n3, temp;
+    n1 = 1;
+    n2 = 1;
+    n3 = 2;
 
     if(n < 0){
       return 0;
     }
     
-    if(n<=2){
-      return dp[n];
+    if(n<2){
+      return n1;
     }
 
-    for(int i = 3; i <=n; i++){
-      dp[i] = dp[i-1] + dp[i-2] + dp[i-3];
+    if(n==2){
+      return n3;
     }
-
-    return dp[n];
     
+    for(int i = 3; i <= n; i++){
+      temp = n1 + n2 + n3;
+      n1 = n2;
+      n2 = n3;
+      n3 = temp;
+    }
+    
+    return temp;
   }
 };
 
