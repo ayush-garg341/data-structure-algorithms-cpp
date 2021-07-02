@@ -7,22 +7,29 @@ using namespace std;
 class ArrayJump {
 public:
   int countMinJumps(const vector<int> &jumps) {
-    int result = countMinJumpsRecursive(jumps,  0);
-    return result;
+    return countMinJumpsRecursive(jumps, 0);
   }
 
-  int countMinJumpsRecursive(const vector<int> &jumps,  int currentIndex){
-    
-    if(currentIndex >= jumps.size()){
+  int countMinJumpsRecursive(const vector<int> &jumps, int currentIndex){
+    if(currentIndex == jumps.size()-1){
       return 0;
     }
-    
-    int nextIndex = currentIndex + jumps[currentIndex];
-    int count = 0;
-    if(nextIndex <= jumps.size()-1){
-      count += 1 + countMinJumpsRecursive(jumps,  nextIndex);
+
+    if(jumps[currentIndex]==0){
+      return numeric_limits<int>::max();
     }
-    return count;
+
+    int startIndex = currentIndex + 1;
+    int totalJumps = numeric_limits<int>::max();
+    int endIndex = currentIndex + jumps[currentIndex];
+    
+    while(startIndex <= endIndex && startIndex < jumps.size()){
+      int minJumps = countMinJumpsRecursive(jumps, startIndex++);
+      if(minJumps != numeric_limits<int>::max()){
+	totalJumps = min(totalJumps, minJumps+1);
+      }
+    }
+    return totalJumps;
     
   }
   
