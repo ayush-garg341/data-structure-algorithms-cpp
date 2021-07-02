@@ -6,20 +6,28 @@ using namespace std;
 class Staircase {
 
 public:
-  int findMinFee(const vector<int> &fee) { 
-    int result = findMinFeeRecursive(fee, 0);
+  int findMinFee(const vector<int> &fee) {
+    vector<int>dp(fee.size(), 0);
+    int result = findMinFeeRecursive(dp, fee, 0);
     return result;
   }
 
-  int findMinFeeRecursive(const vector<int>&fee, int currentIndex){
+  int findMinFeeRecursive(vector<int>dp, const vector<int>&fee, int currentIndex){
     if(currentIndex>=fee.size()){
       return 0;
     }
-    int min1 = fee[currentIndex] + findMinFeeRecursive(fee, currentIndex+1);
-    int min2 = fee[currentIndex] + findMinFeeRecursive(fee, currentIndex+2);
-    int min3 = fee[currentIndex] + findMinFeeRecursive(fee, currentIndex+3);
 
-    return min(min(min1, min2), min3);
+    if(dp[currentIndex]){
+      return dp[currentIndex];
+    }
+    
+    int min1 = fee[currentIndex] + findMinFeeRecursive(dp, fee, currentIndex+1);
+    int min2 = fee[currentIndex] + findMinFeeRecursive(dp , fee, currentIndex+2);
+    int min3 = fee[currentIndex] + findMinFeeRecursive(dp, fee, currentIndex+3);
+
+    dp[currentIndex] = min(min(min1, min2), min3);
+    
+    return dp[currentIndex];
   }
 };
 
