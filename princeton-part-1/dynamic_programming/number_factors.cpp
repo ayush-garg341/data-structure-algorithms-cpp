@@ -8,23 +8,17 @@ class ExpressNumber {
 public:
   int CountWays(int n) {
     vector<int>dp(n+1, 0);
-    dp[0] = 1;
-    dp[1] = 1;
-    dp[2] = 1;
-    dp[3] = 2;
-    int result = CountWaysRecursive(dp, n);
-    return result;
-  }
-
-  int CountWaysRecursive(vector<int>dp, int n){
-
-    if(dp[n]){
-      return dp[n];
+    if(n < 0){
+      return 0;
     }
-
-    dp[n] = CountWaysRecursive(dp, n-1) + CountWaysRecursive(dp, n-3) + CountWaysRecursive(dp, n-4);
-
-    return dp[n];
+    if(n <= 2){
+      return 1;
+    }
+    if(n == 3){
+      return 2;
+    }
+    int result = CountWays(n-1) + CountWays(n-3) + CountWays(n-4);
+    return result;
   }
   
 };
