@@ -7,19 +7,19 @@ class HouseThief {
 public:
   int findMaxSteal(const vector<int> &wealth) {
 
-    vector<int>dp(wealth.size());
+    vector<int>dp(wealth.size(), -1);
     
     int result = findMaxStealReursive(dp, wealth, 0);
     return result; 
   }
 
 
-  int findMaxStealReursive(vector<int>dp, const vector<int> &wealth, int currentIndex){
+  int findMaxStealReursive(vector<int>&dp, const vector<int> &wealth, int currentIndex){
     if(currentIndex >= wealth.size()){
       return 0;
     }
 
-    if(dp[currentIndex]){
+    if(dp[currentIndex]!=-1){
       return dp[currentIndex];
     }
 
