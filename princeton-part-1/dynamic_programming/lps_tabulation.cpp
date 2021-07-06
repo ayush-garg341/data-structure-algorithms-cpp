@@ -12,13 +12,17 @@ public:
       dp[i][i] = 1;
     }
 
-    for(int startIndex = st.length() - 1; startIndex >= 0; startIndex--){
-      for(int endIndex = startIndex + 1; endIndex < st.length(); endIndex++){
-	if(st[startIndex]==st[endIndex]){
-	  dp[startIndex][endIndex] = 2 + dp[startIndex+1][endIndex-1];
+    for(int l = 2; l <= st.length(); l++){
+      for(int i = 0; i < st.length()-l+1; i++){
+	int j = i + l -1;
+	if(l==2 && st[i] == st[j]){
+	  dp[i][j] = 2;
+	}
+	else if(st[i] == st[j]){
+	  dp[i][j] = 2 + dp[i+1][j-1];
 	}
 	else{
-	  dp[startIndex][endIndex] = max(dp[startIndex+1][endIndex], dp[startIndex][endIndex-1]);
+	  dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
 	}
       }
     }
