@@ -4,6 +4,7 @@
 
 
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
@@ -11,11 +12,12 @@ using namespace std;
 class LPS {
 public:
   int findLPSLength(const string &st) {
-    return findLPSLengthRecursive(st, 0, st.length() - 1);
+    vector<vector<int>>dp(st.length(), vector<int>(st.length(), -1));
+    return findLPSLengthRecursive(dp, st, 0, st.length() - 1);
   }
 
 private:
-  int findLPSLengthRecursive(const string &st, int startIndex, int endIndex){
+  int findLPSLengthRecursive(vector<vector<int>>dp, const string &st, int startIndex, int endIndex){
     if(startIndex > endIndex){
       return 0;
     }
@@ -24,14 +26,19 @@ private:
       return 1;
     }
 
-    if(st[startIndex]==st[endIndex]){
-      return 2 + findLPSLengthRecursive(st, startIndex+1, endIndex-1);
+
+    if(dp[startIndex][endIndex]==-1){
+      if(st[startIndex]==st[endIndex]){
+	dp[startIndex][endIndex] =  2 + findLPSLengthRecursive(dp, st, startIndex+1, endIndex-1);
+      }
+      else{
+	int count1 = findLPSLengthRecursive(dp, st, startIndex+1, endIndex);
+	int count2 = findLPSLengthRecursive(dp, st, startIndex, endIndex-1);
+	dp[startIndex][endIndex] = max(count1, count2);
+      }
     }
-
-    int count1 = findLPSLengthRecursive(st, startIndex+1, endIndex);
-    int count2 = findLPSLengthRecursive(st, startIndex, endIndex-1);
-
-    return max(count1, count2);
+      
+    return dp[startIndex][endIndex];
     
   }
   
