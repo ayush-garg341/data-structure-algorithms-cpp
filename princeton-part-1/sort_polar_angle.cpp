@@ -14,7 +14,7 @@ struct Point{
 2 -> anti clockwise
  */
 
-Point p0 = {0,0};
+Point p0;
 
 
 int distSq(Point p1, Point p2){
@@ -49,14 +49,40 @@ int compare(const void *p1, const void *p2){
 }
 
 
+void swap(Point &p1, Point &p2)
+{
+    Point temp = p1;
+    p1 = p2;
+    p2 = temp;
+}
+
 int main(){
 
   Point points[] = {
-		    {3, -2}, {0, 3}, {1, 1}, {1, 3}, {-2, 4},
+		    {0,0}, {3, -2}, {0, 3}, {1, 1}, {1, 3}, {-2, 4},
 		    {-1, -1}, {3, -1}
   };
 
   int n = sizeof(points)/sizeof(points[0]);
+
+  // Find the bottommost point
+  int ymin = points[0].y, min = 0;
+  for (int i = 1; i < n; i++)
+    {
+      int y = points[i].y;
+      
+      // Pick the bottom-most or chose the left
+      // most point in case of tie
+      if ((y < ymin) || (ymin == y &&
+			 points[i].x < points[min].x))
+	ymin = points[i].y, min = i;
+    }
+
+
+  // Place the bottom-most point at first position
+  swap(points[0], points[min]);
+
+  p0 = points[0];
   
   qsort(&points[0], n, sizeof(Point), compare);
 
