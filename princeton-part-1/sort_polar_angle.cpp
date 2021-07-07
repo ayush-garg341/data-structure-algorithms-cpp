@@ -3,70 +3,82 @@
 
 using namespace std;
 
-#define lpr pair<int,int>
+struct Point{
+  int x, y;
+};
 
-pair<int, int> refPoint = make_pair(0, 0);
+
+/*
+0 -> co-linear
+1 -> clockwise
+2 -> anti clockwise
+ */
+
+Point p0 = {0,0};
 
 
-int quadrant(lpr x){
-  if(x.first >= 0 && x.second >= 0){
-    return 1;
-  }
-  if(x.first <=0 && x.second >= 0){
-    return 2;
-  }
-  if(x.first <=0 && x.second <= 0){
-    return 3;
-  }
+int distSq(Point p1, Point p2){
+  return (p1.x - p2.x)*(p1.x - p2.x) +
+    (p1.y - p2.y)*(p1.y - p2.y);
+}
 
-  if(x.first >= 0 && x.second <= 0){
-    return 4;
+
+int orientation(Point p1, Point p2){
+  int cross_prod = (p1.x - p0.x)*(p2.y - p0.y) - (p2.x - p0.x)*(p1.y - p0.y);
+
+  if(cross_prod==0){
+    return cross_prod;
   }
+  
+  return cross_prod > 0 ? 1 : 2;  
   
 }
 
-bool compareFn(lpr a, lpr b){
-  int quada = quadrant(a);
-  int quadb = quadrant(b);
 
-  if(quada > quadb){
-    return false;
+int compare(const void *p1, const void *p2){
+  Point *vp1 = (Point *)p1;
+  Point *vp2 = (Point *)p2;
+
+  int dir = orientation(*vp1, *vp2);
+
+  if(dir==0){
+    return (distSq(p0, *vp1) >= distSq(p0, *vp2))? 1 : -1;
   }
 
-  // compute the cross product of vectors (refPoint -> a) first (refPoint -> b)
-  int det = (a.first - refPoint.first) * (b.second - refPoint.second) - (b.first - refPoint.first) * (a.second - refPoint.second);
-  if (det > 0)
-    return true;
-  if (det < 0)
-    return false;
-
-
-  // points a and b are on the same line from the refPoint
-  // check which point is closer to the refPoint
-  int d1 = (a.first - refPoint.first) * (a.first - refPoint.first) + (a.second - refPoint.second) * (a.second - refPoint.second);
-  int d2 = (b.first - refPoint.first) * (b.first - refPoint.first) + (b.second - refPoint.second) * (b.second - refPoint.second);
-  return d1 < d2;
-  
+  return dir == 1 ? -1 : 1; 
 }
 
 
 int main(){
-  vector<lpr>points;
-  points.push_back(make_pair(-2, 3));
-  points.push_back(make_pair(1, 2));
-  points.push_back(make_pair(3, -1));
-  points.push_back(make_pair(-2, -2));
-  points.push_back(make_pair(2, 2));
-  points.push_back(make_pair(1, 3));
-  points.push_back(make_pair(3, 3));
-  
-  sort(points.begin(), points.end(), compareFn);
 
-  for(int i = 0; i < points.size(); i++){
-    cout << points[i].first << " " << points[i].second << endl;
+  Point points[] = {
+		    {3, -2}, {0, 3}, {1, 1}, {1, 3}, {-2, 4},
+		    {-1, -1}, {3, -1}
+  };
+
+  int n = sizeof(points)/sizeof(points[0]);
+  
+  qsort(&points[0], n, sizeof(Point), compare);
+
+  for(int i = 0 ; i < n; i++){
+    cout << points[i].x << " " << points[i].y << endl;
   }
+
   return 0;
 }
 
 
-// This “comparator” function returns a value; convertible to bool, which basically tells us whether the passed “first” argument should be placed before the passed “second” argument or not. 
+// sort:- This “comparator” function returns a value; convertible to bool, which basically tells us whether the passed “first” argument should be placed before the passed “second” argument or not. 
+
+
+// qsort:-  void qsort (void* base, size_t num, size_t size, int (*comparator)(const void*,const void*));
+/*
+
+int comparator(const void* p1, const void* p2);
+
+Return value meaning
+<0 The element pointed by p1 goes before the element pointed by p2
+0  The element pointed by p1 is equivalent to the element pointed by p2
+>0 The element pointed by p1 goes after the element pointed by p2
+
+ */
