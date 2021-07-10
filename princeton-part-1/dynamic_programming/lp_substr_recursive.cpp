@@ -22,17 +22,20 @@ public:
       return 1;
     }
 
-    if(st[start]==st[end]){
-      int remainingLen = end-start-1;
-      if(remainingLen==findLPSLengthRecursive(st, dp, start+1, end-1)){
-	return 2 + remainingLen;
-      }
+    if(!dp[start][end]){
+      int c1 = 0;
+      if(st[start]==st[end]){
+	int remainingLen = end-start-1;
+	if(remainingLen==findLPSLengthRecursive(st, dp, start+1, end-1)){
+	  c1 =  2 + remainingLen;
+	}
+      }	
+      int c2 = findLPSLengthRecursive(st, dp, start+1, end);
+      int c3 = findLPSLengthRecursive(st, dp, start, end-1);
+      dp[start][end] = max(c3, max(c1, c2));
+      
     }
-
-    int c1 = findLPSLengthRecursive(st, dp, start+1, end);
-    int c2 = findLPSLengthRecursive(st, dp, start, end-1);
-
-    return max(c1, c2);
+    return dp[start][end];
     
   }
   
