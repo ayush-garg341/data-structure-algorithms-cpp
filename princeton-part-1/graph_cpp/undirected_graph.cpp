@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 using namespace std;
 
 void addEdge(vector<int>adj[], int from, int to){
@@ -44,6 +45,14 @@ void printVertexSource(int edgeTo[], bool marked[], int V){
   }
 }
 
+void pathToVertex(int edgeTo[], int vertex){
+  if(edgeTo[vertex]!=vertex){
+    pathToVertex(edgeTo, edgeTo[vertex]);
+    cout << edgeTo[vertex] << " -> ";
+  }
+  return;
+}
+
 
 int main(int argc, char* argv[]){
   int V = 5;
@@ -72,6 +81,10 @@ int main(int argc, char* argv[]){
   dfsUtil(adj, edgeTo, marked, source);
 
   printVertexSource(edgeTo, marked,  V);
+
+  int dest = 4;
+  pathToVertex(edgeTo, dest);
+  cout << dest << endl;
   
   return 0;
 }
