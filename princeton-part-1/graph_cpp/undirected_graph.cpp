@@ -20,6 +20,31 @@ void printGraph(vector<int>adj[], int V){
 }
 
 
+void dfs(vector<int>adj[], int edgeTo[], bool marked[], int source){
+  marked[source] = true;
+  for(auto x: adj[source]){
+    if(!marked[x]){
+      dfs(adj, edgeTo, marked, x);
+      edgeTo[x]=source;
+    }
+  }
+}
+
+
+void dfsUtil(vector<int>adj[], int edgeTo[], bool marked[], int source){
+  dfs(adj, edgeTo, marked, source);
+}
+
+
+void printVertexSource(int edgeTo[], bool marked[], int V){
+  for(int i = 0; i < V; i++){
+    cout << i << " " << (marked[i]?"visited":"un-visited") << endl;
+    cout << "to "<< i << " from " << edgeTo[i] << endl;
+    printf("\n");
+  }
+}
+
+
 int main(int argc, char* argv[]){
   int V = 5;
 
@@ -35,6 +60,18 @@ int main(int argc, char* argv[]){
   addEdge(adj, 2, 3);
   addEdge(adj, 3, 4);
   printGraph(adj, V);
+
+  cout << endl;
+
+  int edgeTo[V];
+  bool marked[V] = {false};
+  int source = 0;
+
+  edgeTo[source] = source;
+
+  dfsUtil(adj, edgeTo, marked, source);
+
+  printVertexSource(edgeTo, marked,  V);
   
   return 0;
 }
