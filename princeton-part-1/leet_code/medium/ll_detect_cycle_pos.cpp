@@ -1,5 +1,4 @@
 #include<iostream>
-#include<unordered_map>
 using namespace std;
 
 struct ListNode{
@@ -15,26 +14,42 @@ struct ListNode{
 class Solution{
 public:
   ListNode* detectCycle(ListNode *head) {
-
-    unordered_map<ListNode*, int>umap;
     
     if(head==nullptr || head->next==nullptr){
       return nullptr;
     }
 
-    while(head!=nullptr){
-      if(umap.find(head)==umap.end()){
-	umap[head]++;
-	head = head->next;
-	
+    bool exist = false;
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast->next!=nullptr){
+      fast = fast -> next;
+      slow = slow -> next;
+      if(fast->next!=nullptr){
+	if(fast->next==slow){
+	  exist=true;
+	  fast = fast->next;
+	  break;
+	}
+	else{
+	  fast = fast->next;
+	}
       }
       else{
-	return head;
+	return nullptr;
       }
     }
 
-    return nullptr;
-    
+    if(exist==true){
+      slow = head;
+      while(slow!=fast){
+	slow = slow->next;
+	fast = fast->next;
+      }
+      return slow;
+    }
+
+    return  nullptr;
   }
 };
 
