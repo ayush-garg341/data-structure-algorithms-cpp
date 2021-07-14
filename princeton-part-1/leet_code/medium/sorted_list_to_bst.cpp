@@ -65,7 +65,7 @@ public:
     while(fast->next!=tail){
       fast = fast->next;
       slow = slow->next;
-      if(fast->next!=tail){
+      if(fast->next!=tail){ // this condition ensures that we are never taking mid into account, since mid will be our root node i.e. ( head - mid-1 ) & ( mid+1 - tail)
 	fast = fast->next;
       }
     }
