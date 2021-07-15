@@ -1,117 +1,83 @@
 #include<iostream>
 #include<vector>
-#include <climits>
+#include<stack>
 
 using namespace std;
 
-class Solution{
+
+class Solution {
 public:
-  struct Node{
-    int val;
-    int time;
-    Node *next;
-  };
-  
-  int minCost(int maxTime, vector<vector<int>>& edges, vector<int>& passingFees){
-    int num_nodes = passingFees.size();
-    int num_edges = sizeof(edges)/sizeof(edges[0]);
+    int minCost(int maxTime, vector<vector<int>>& edges, vector<int>& passingFees) {
+      int V = passingFees.size();\
+      bool visited[V] = {false};
+      vector<pair<int, int>>adj[V];
+      for(int i = 0; i < edges.size(); i++){
+	addEdge(adj, edges[i][0], edges[i][1], edges[i][2]);
+      }
 
-    this->maxTime = maxTime;
-    this->passingFees = passingFees;
+      vector<vector<int>>paths;
+      vector<int>path;
+
+      dfs(adj, visited, 0, V-1, paths, path);
+
+      
+      for(int i = 0; i<paths.size(); i++){
+	int time = 0;
+	int cost = 0;
+	for(int j = 0; j< paths[i].size(); j++){
+	  if(time <= maxTime){
+	    cost += passingFees[paths[i][j]];
+	  }
+	  else{
+	    cost = -1;
+	  }
+	  
+	}
+      }
+
+      return 0;
+      
+    }
+
+  void dfs(vector<pair<int, int>>adj[], bool visited[], int source, int dest, vector<vector<int>>&paths, vector<int>&path){
+    visited[source] = true;
+    path.push_back(source);
     
-    for (int i = 0; i < num_nodes; i++) {
-      this->head[i] = nullptr;
+    if(source==dest){
+      paths.push_back(path);
     }
-
-    for(int i = 0; i < num_edges; i++){
-      int src = edges[i][0];
-      int dest = edges[i][1];
-
-      // make node adjacent to src
-      Node* newNode = getAdjListNode(dest, edges[i][2], head[src]);
-      head[src] = newNode;
-
-
-      // make node adjacent to dest
-      newNode = getAdjListNode(src, edges[i][2], head[dest]);
-      head[dest] = newNode; 
-    }
-
-    int source = 0;
-    int dest = num_nodes - 1;
-
-    this->dest = dest;
-
-    Node* headAdjSource = getAdjNodes(source);
-
-    int minCost = INT_MAX;
-    int time = 0;
-    int cost = 0;
-    while(headAdjSource!=nullptr){
-      time += headAdjSource->time;
-      cost += passingFees[0];
-      int  returnCost = dfs(headAdjSource->val, time, cost);
-      if(returnCost!=-1){
-	minCost = min(minCost, cost+returnCost);
+    else{
+      for(auto x: adj[source]){
+	if(!visited[x.first]){
+	  dfs(adj, visited,  x.first, dest, paths, path);
+	}
       }
     }
-
-    return minCost == INT_MAX ? -1 : minCost;
     
+    visited[source]=false;
+    path.pop_back();
   }
 
-private:
-
-  Node **head;
-  int maxTime;
-  int dest;
-  vector<int>passingFees;
-  
-  
-  Node * getAdjListNode(int dest, int time, Node * head){
-    Node* newNode = new Node;
-    newNode -> val = dest;
-    newNode -> time = time;
-    newNode -> next = head;
-    return newNode;
-  }
-  
-  Node* getAdjNodes(int v){
-    return this->head[v];
-  }
-
-  int dfs(int w, int time, int cost){
-    if(time > this->maxTime){
-      return -1;
-    }
-    if(w!=this->dest){
-      cost += this->passingFees[w];
-      Node* headAdjSource = getAdjNodes(w);
-      while(headAdjSource!=nullptr){
-	time+=headAdjSource->time;
-	dfs(headAdjSource->val, time, cost);
-      }
-      headAdjSource = headAdjSource->next;
-    }
-    return cost;
+  void addEdge(vector<pair<int, int>>adj[], int u, int v, int time){
+    adj[u].push_back(make_pair(v, time));
+    adj[v].push_back(make_pair(u, time));
   }
   
 };
 
 
-int main(int argc, char* argv[]){
+
+int main(){
   int maxTime = 30;
-  vector<vector<int>>edges = { {0,1,10},{1,2,10},{2,5,10},{0,3,1},{3,4,10},{4,5,15} };
-  vector<int>passingFees = {5,1,2,20,20,3};
-  
-  // int num_nodes = passingFees.size();
-  // int num_edges = sizeof(edges)/sizeof(edges[0]);
-  
+  vector<vector<int>>edges = {{0,1,10},{1,2,10},{2,5,10},{0,3,1},{3,4,10},{4,5,15}};
+  vector<int> passingFees = {5,1,2,20,20,3};
+
   Solution soln;
+  
+  int mimCost = soln.minCost(maxTime, edges, passingFees);
 
-  int cost = soln.minCost(maxTime, edges, passingFees);
+  cout << "mim cost = " << mimCost << endl;
 
-  cout << cost << endl;
-    
   return 0;
+
 }
