@@ -11,16 +11,20 @@ public:
       int prev_dist = 0;
       for(int i = 0; i < size; i++){
 	if(i==0){
-	  while(rungs[i] - prev_dist > dist){
-	    rung_num += 1;
-	    prev_dist += dist;
+	  if( ( rungs[i] - prev_dist) %  dist == 0){
+	    rung_num +=  ( (rungs[i] - prev_dist) / dist ) - 1 ; 
+	  }
+	  else{
+	    rung_num +=  (rungs[i] - prev_dist) / dist ; 
 	  }
 	}
 	else{
 	  prev_dist = rungs[i-1];
-	  while( rungs[i]- prev_dist  > dist){
-	    rung_num += 1;
-	    prev_dist += dist;
+	  if( ( rungs[i]- prev_dist ) % dist == 0){
+	    rung_num += ( (rungs[i] - prev_dist) / dist ) - 1;
+	  }
+	  else{
+	    rung_num +=  (rungs[i] - prev_dist) / dist ;
 	  }
 	}
       }
