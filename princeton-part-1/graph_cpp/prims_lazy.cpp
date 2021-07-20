@@ -24,6 +24,11 @@ struct Graph{
   vector<pair<double, pair<int, int>>> getMST(){
     vector<pair<double, pair<int, int>>>mst_queue;
     bool marked[V] = {false};
+
+    for (int v = 0; v < V; v++)     // run Prim from all vertices to
+      if (!marked[v]) {};     // get a minimum spanning forest
+    
+    
     visit(0, marked);
     while(!pq.empty()){
       p min_weight_edge = pq.top();
