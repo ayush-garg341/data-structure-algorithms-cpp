@@ -31,3 +31,6 @@ int main()
         cout << "No Such Sub Array Exists!";
     return 0;
 }
+
+
+// The logic is because we are getting the prefix sum repeated, it means there has been sub-array of zero sum in between, otherwise sum will either increase or decrease but not remain the same and hence 0 sum exist.
