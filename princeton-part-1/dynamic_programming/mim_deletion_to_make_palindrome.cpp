@@ -44,3 +44,6 @@ int main(int argc, char *argv[]){
   
   return 0;
 }
+
+
+// This approach also works for finding the minmum chars to insert to make string palindrome. Since instead of removing we can add the chars at appropriate places to make it palinfrome....
