@@ -21,6 +21,12 @@ public:
 	    int len = word.length();
 	    count = max(count, len); 
 	  }
+	  else{
+	    break;
+	  }
+	}
+	else{
+	  break;
 	}
       }
     }
