@@ -12,35 +12,38 @@ public:
       return count;
     }
     
-    for(int i = 0; i < s1.length()-1; i++){
-      string word = "" + s1[i];
-      for(int j = i+1; j < s1.length(); j++){
-	word += s1[j];
-	if(word.length() <= s2.length()){
-	  if(s2.find(word)!=string::npos){
-	    int len = word.length();
-	    count = max(count, len); 
-	  }
-	  else{
-	    break;
-	  }
-	}
-	else{
-	  break;
-	}
-      }
-    }
+    count = findLCSLengthRecursive(s1, s2, 0, 0, 0);
     
     return count;
   }
+
+  int findLCSLengthRecursive(const string &s1, const string &s2, int startS1, int startS2, int count){
+    if(startS1 == s1.length() || startS2 == s2.length()){
+      return count;
+    }
+
+
+    if(s1[startS1] == s2[startS2]){
+      count = findLCSLengthRecursive(s1, s2, startS1 + 1, startS2 + 1, count + 1);
+    }
+    
+    int count2 = findLCSLengthRecursive(s1, s2, startS1 , startS2 + 1, 0);
+    int count3 = findLCSLengthRecursive(s1, s2, startS1+1, startS2 , 0);
+
+    return max(count, max(count2, count3));
+  }
+
+  
+  
 };
 
 
 int main(){
 
   LCS *lcs = new LCS();
-  cout << lcs->findLCSLength("abdca", "cbda") << endl;
-  cout << lcs->findLCSLength("passport", "ppsspt") << endl;
+  // cout << lcs->findLCSLength("abdca", "cbda") << endl;
+  // cout << lcs->findLCSLength("passport", "ppsspt") << endl;
+  cout << lcs->findLCSLength("abc", "adc") << endl;
   delete lcs;
   
   return 0;
