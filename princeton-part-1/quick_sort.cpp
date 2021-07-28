@@ -62,6 +62,34 @@ public:
       }
     }
   }
+
+
+  void dijkstra3Way(vector<int>&nums, int low, int high){
+    if(low >= high){
+      return;
+    }
+
+    int lt = low;
+    int gt = high;
+    int i = low;
+    int v = nums[low];
+    while(i<=gt){
+      if(nums[lt] > nums[i]){
+	swap(nums[i++], nums[lt++]);
+      }
+      else if(nums[lt] < nums[i]){
+	swap(nums[i], nums[gt--]);
+      }
+      else{
+	i++;
+      }
+    }
+
+    dijkstra3Way(nums, low, lt-1);
+    dijkstra3Way(nums, gt+1, high);
+  }
+  
+  
 };
 
 
@@ -86,6 +114,17 @@ int main(){
   int kth = qs->quickSelect(nums, low, high, 12);
 
   cout << kth << endl;
+
+  nums = {1, 5, 4, 8, 3, 2, 2, 3, 1, 3, 3, 5, 9, 8, 8, 11, 11, 10, 12};
+  low = 0;
+  high = nums.size()-1;
+  qs->dijkstra3Way(nums, low, high);
+
+  for(int i=0; i < nums.size(); i++){
+    cout << " " << nums[i];
+  }
+
+  cout << endl;
 
   delete qs;
   
