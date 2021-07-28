@@ -62,39 +62,62 @@ public:
 	}
       }
     }
+    return elts;
+  };
 
-    // TreeNode* temp;
-    // while(!order.empty()){
-    //   temp = order.front();
-    //   elts.push_back(temp->val);
-    //   order.pop();
-    // }
+
+  vector<int> postOrder(TreeNode* root){
+    vector<int>elts;
+    stack<int>reverse;
+    stack<TreeNode*>order;
+    order.push(root);
+
+    while(!order.empty()){
+      TreeNode* temp = order.top();
+      order.pop();
+      reverse.push(temp->val);
+      if(temp->left!=nullptr){
+	order.push(temp->left);
+      }
+      if(temp->right!=nullptr){
+	order.push(temp->right);
+      }
+    }
+
+    while(!reverse.empty()){
+      elts.push_back(reverse.top());
+      reverse.pop();
+    }
     
     return elts;
   };
+  
   
 };
 
 
 
 int main(){
-  struct TreeNode* root = new TreeNode(3);
-  root->left        = new TreeNode(9);
-  root->left->right = new TreeNode(10);
-  root->right       = new TreeNode(20);
-  root->right->left  = new TreeNode(15);
-  root->right->right = new TreeNode(7);
+  struct TreeNode* root = new TreeNode(1);
+  root->left        = new TreeNode(2);
+  root->left->right = new TreeNode(5);
+  root->left->left  = new TreeNode(4);
+  root->right  = new TreeNode(3);
 
-  Solution soln;
-  //vector<int>inorder = soln.inOrder(root);
+  vector<int>order;
+  Solution *soln;
+  //order = soln -> inOrder(root);
+  //order = soln -> preOrder(root);
 
-  vector<int>preorder = soln.preOrder(root);
+  order = soln -> postOrder(root);
   
-  for(int i=0; i < preorder.size(); i++){
-    cout << " " << preorder[i];
+  for(int i=0; i < order.size(); i++){
+    cout << " " << order[i];
   }
 
   cout << endl;
+
+  delete soln;
   
   return 0;
 }
