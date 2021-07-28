@@ -74,10 +74,10 @@ public:
     int i = low;
     int v = nums[low];
     while(i<=gt){
-      if(nums[lt] > nums[i]){
+      if(v > nums[i]){
 	swap(nums[i++], nums[lt++]);
       }
-      else if(nums[lt] < nums[i]){
+      else if(v < nums[i]){
 	swap(nums[i], nums[gt--]);
       }
       else{
