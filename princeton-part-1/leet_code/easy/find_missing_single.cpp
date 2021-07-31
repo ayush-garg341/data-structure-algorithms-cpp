@@ -38,6 +38,7 @@ public:
 	return prev;
       }
     }
+    return prev;
   };
 
   int XOR(vector<int>&nums){
@@ -50,6 +51,32 @@ public:
   }; 
 
   int binarySearch(vector<int>&nums){
+
+    sort(nums.begin(), nums.end());
+
+    int low = 0; int high = nums.size()-1;
+
+    while(high > low){
+      int mid =(low + high)/2;
+      if(mid % 2==0){
+	if(nums[mid]==nums[mid+1]){
+	  low = mid+2;
+	}
+	else{
+	  high = mid;
+	}
+      }
+      else{
+	if(nums[mid]==nums[mid+1]){
+	  high = mid-1;
+	}
+	else{
+	  low = mid+1;
+	}
+      }
+    }
+
+    return nums[low];
     
   };
 
@@ -75,14 +102,18 @@ public:
 
 
 int main(){
-  vector<int>nums = {1, 2, 1, 3, 3, 2, 7, 8, 9, 7, 9};
+  //vector<int>nums = {1, 2, 1, 3, 3, 2, 7, 8, 9, 7, 9};
 
+  //vector<int>nums = {2, 3, 4, 2, 6, 4, 6};
+
+  vector<int>nums = {2, 1, 2, 3, 3};
+  
   MissingSingle *soln = new MissingSingle();
 
   cout << soln -> hashMap(nums) << endl;
   cout << soln -> naive(nums) << endl;
   cout << soln -> XOR(nums) << endl;
-  // cout << soln -> binarySearch(nums) << endl;
+  cout << soln -> binarySearch(nums) << endl;
   cout << soln -> sum(nums) << endl;
 
   delete soln;
