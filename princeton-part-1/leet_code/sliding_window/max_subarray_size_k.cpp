@@ -39,6 +39,9 @@ int main(){
   MaxSumSubArrayOfSizeK *soln = new MaxSumSubArrayOfSizeK();
 
   cout << soln -> findMaxSumSubArray(k, nums) << endl;
+
+
+  delete soln;
   
   return 0;
 }

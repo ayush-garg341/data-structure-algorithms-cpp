@@ -39,5 +39,8 @@ int main(){
   
   MinSizeSubArraySum *soln = new MinSizeSubArraySum();
   cout << soln -> findMinSubArray(sum, nums) << endl;
+
+  delete soln;
+  
   return 0;
 }
