@@ -8,24 +8,17 @@ class LongestSubstringKDistinct {
  public:
   static int findLength(const string& str, int k) {
     int maxLength = 0;
-    int distinct_chars = 0;
     int index = 0;
     unordered_map<char, int>distinct_char_map;
     for(int i = 0; i < str.length(); i++){
-      if(distinct_char_map.find(str[i])==distinct_char_map.end() || distinct_char_map[str[i]]==0){
-	distinct_char_map[str[i]]++;
-	distinct_chars++;
-      }
-
-     
-      while(distinct_chars > k){
-	if(distinct_char_map[str[index]] > 1){
-	  distinct_char_map[str[index++]] -= 1;
+      distinct_char_map[str[i]]++;
+	
+      while( (int)distinct_char_map.size() > k){
+	distinct_char_map[str[index]]--;
+	if(distinct_char_map[str[index]]==0){
+	  distinct_char_map.erase(str[index]);
 	}
-	else{
-	  distinct_chars -= 1;
-	  distinct_char_map[str[index++]] -= 1;
-	}
+	index ++;
       }
       maxLength = max(maxLength, i - index + 1);
     }
