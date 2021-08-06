@@ -9,25 +9,19 @@ class CharacterReplacement {
  public:
   static int findLength(const string& str, int k) {
     int maxLength = 0;
-    int distinct_chars = 0;
     int index = 0;
     unordered_map<char, int>umap;
+    int maxRepeatingCharCount = 0;
     for(int i = 0; i < str.length(); i++){
-      char start = str[i];
-      int diff = 0;
-      int j = i + 1;
-      while(j < str.length()){
-	if(str[j]!=start){
-	  diff += 1;
-	}
-	if(diff > k){
-	  break;
-	}
-	j++;
-      }
-
-      maxLength = max(maxLength, j-i);
+	umap[str[i]]++;
+	maxRepeatingCharCount = max(maxRepeatingCharCount, umap[str[i]]);
       
+	while( i -  index + 1 - maxRepeatingCharCount > k){
+	  umap[str[index]]--;
+	  index++;
+	}
+
+	maxLength = max(maxLength, i - index + 1);
     }
     return maxLength;
   }
@@ -54,6 +48,14 @@ int main(){
   k = 1;
 
   cout << soln->findLength(s, k) << endl;
+
+  cout << "  ======  " << endl;
+  
+  s = "abbb";
+  k = 1;
+  cout << soln->findLength(s, k) << endl;
+
+    
 
   delete soln;
   
