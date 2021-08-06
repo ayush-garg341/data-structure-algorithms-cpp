@@ -9,15 +9,17 @@ class ReplacingOnes {
   static int findLength(const vector<int>& arr, int k) {
     int  maxLength = 0;
     int index = 0;
-    unordered_map<int, int>umap;
-    int maxRepeatingCharCount = 0;
+    int maxRepeatingOnes = 0;
 
     for(int i = 0; i < arr.size(); i++){
-      umap[arr[i]]++;
-      maxRepeatingCharCount = max(maxRepeatingCharCount, umap[arr[i]]);
+      if(arr[i]==1){
+	maxRepeatingOnes ++;
+      }
 
-      while(i - index + 1 - maxRepeatingCharCount > k){
-	umap[arr[index]]--;
+      while(i - index + 1 - maxRepeatingOnes > k){
+	if(arr[index]==1){
+	  maxRepeatingOnes --;
+	}
 	index++;
       }
       maxLength = max(maxLength, i - index + 1);
