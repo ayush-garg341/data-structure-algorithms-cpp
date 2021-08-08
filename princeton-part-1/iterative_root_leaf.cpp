@@ -19,8 +19,9 @@ struct Node{
 
 class Solution {
 public:
-  void rootToLeafPaths(Node* root) {
+  vector<vector<int>> rootToLeafPaths(Node* root) {
     unordered_map<Node*, bool>umap;
+    vector<vector<int>>all_paths;
     vector<int>path;
     stack<Node*>nodes;
     nodes.push(root);
@@ -41,10 +42,7 @@ public:
 	root = root->right;
       }
       else if(root->left==nullptr && root->right==nullptr){
-	for(int i = 0; i < path.size(); i++){
-	  cout << path[i] << " -> ";
-	}
-	cout << endl;
+	all_paths.push_back(path);
 	nodes.pop();
 	path.pop_back();
 	if(nodes.empty()){
@@ -65,6 +63,8 @@ public:
       	}
       }
     }
+
+    return all_paths;
     
   }
   
@@ -88,9 +88,15 @@ int main(int argc, char* argv[]){
   
   Solution soln;
 
-  soln.rootToLeafPaths(root);
-  //vector<vector<int>> paths  = soln.rootToLeafPaths(root);
+  //soln.rootToLeafPaths(root);
+  vector<vector<int>> paths  = soln.rootToLeafPaths(root);
 
+  for(int i = 0; i < paths.size(); i++){
+    for(int j = 0;  j < paths[i].size(); j++){
+      cout << paths[i][j] << " -> ";
+    }
+    cout << endl;
+  }
 
   return 0;
 }
