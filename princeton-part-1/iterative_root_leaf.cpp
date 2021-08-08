@@ -67,6 +67,57 @@ public:
     return all_paths;
     
   }
+
+  vector<int> branchSums(Node *root) {
+    if(root == nullptr){
+      return {};
+    }
+    
+    unordered_map<Node*, bool>umap;	
+    vector<int>branches_sum;
+    stack<Node*>nodes;
+    nodes.push(root);
+    umap[root] = true;
+    int sum = root->data;
+    while(!nodes.empty() || root!=nullptr){
+      
+      if(root->left!=nullptr && umap[root->left]!=true){
+	nodes.push(root->left);
+	sum+= root->left->data;
+	umap[root->left] = true;
+	root = root->left;
+      }
+      else if(root->right!=nullptr && umap[root->right]!=true){
+	nodes.push(root->right);
+	sum += root->right->data;
+	umap[root->right] = true;
+	root = root->right;
+      }
+      else if(root->left==nullptr && root->right==nullptr){
+	branches_sum.push_back(sum);
+	sum -= nodes.top()->data;
+	nodes.pop();
+	if(nodes.empty()){
+	  root = nullptr;
+	}
+	else{
+	  root = nodes.top();
+	}
+      }
+      else {
+	sum -= nodes.top()->data;
+      	nodes.pop();
+      	if(nodes.empty()){
+      	  root = nullptr;
+      	}
+      	else{
+      	  root = nodes.top();
+      	}
+      }
+    }
+    
+    return branches_sum;
+  }
   
 };
 
