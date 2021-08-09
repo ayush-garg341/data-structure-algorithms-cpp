@@ -28,7 +28,6 @@ public:
   void branchSumsRecursive(Node* root, vector<int>&path_sum, int sum){
     if(root->left==nullptr && root->right==nullptr){
       path_sum.push_back(sum);
-      sum -= root->data;
       return;
     }
 
