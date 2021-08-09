@@ -41,7 +41,7 @@ public:
     if(root->right!=nullptr){
       sum += root->right->data;
       branchSumsRecursive(root->right, path_sum, sum);
-      sum -= root->right->data;
+      //sum -= root->right->data;
     }
 
     return;
