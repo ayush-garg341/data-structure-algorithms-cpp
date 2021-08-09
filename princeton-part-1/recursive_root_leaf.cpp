@@ -19,8 +19,10 @@ class Solution{
 public:
   vector<int> branchSums(Node* root){
     vector<int>path_sum;
-    int sum = root->data;
-    branchSumsRecursive(root, path_sum, sum);
+    // int sum = root->data;
+    // branchSumsRecursive(root, path_sum, sum);
+    int sum = 0;
+    branchSumsRecursiveTwo(root, path_sum, sum);
 
     return path_sum;
   }
@@ -43,6 +45,21 @@ public:
     }
 
     return;
+  }
+
+  void branchSumsRecursiveTwo(Node* root, vector<int>&path_sum, int sum){
+    if(root==nullptr){
+      return;
+    }
+    sum += root->data;
+    if(root->left==nullptr && root->right==nullptr){
+      path_sum.push_back(sum);
+      return;
+    }
+
+    branchSumsRecursiveTwo(root->left, path_sum, sum);
+    branchSumsRecursiveTwo(root->right, path_sum, sum);
+    
   }
   
 };
