@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 using namespace std;
 
 struct Node{
@@ -22,8 +23,8 @@ public:
     int p = 0;
     //nodeDepthsRecursiveTwo(root, sum, p);
     //return p;
-    sum = nodeDepthsRecursiveThree(root, 0);
-    return sum;
+    //sum = nodeDepthsRecursiveThree(root, 0);
+    return iterativeUsingStack(root);
   }
 
   void nodeDepthsRecursive(Node* root, int sum, int &p){
@@ -77,6 +78,42 @@ public:
     return depth + nodeDepthsRecursiveThree(root->left, depth+1) + nodeDepthsRecursiveThree(root->right, depth+1);
   }
 
+
+  int iterativeUsingStack(Node* root){
+    struct Level{
+      Node* root;
+      int depth;
+    };
+    
+    stack<Level>st;
+    st.push(Level{root, 0});
+
+    int depth = 0;
+    int totalDepth = 0;
+    
+    while(!st.empty()){
+
+      Level top = st.top();
+      st.pop();
+
+      depth = top.depth;
+      root = top.root;
+
+      totalDepth += depth;
+
+      cout << " depth = " << depth << " data = " << root->data << endl;
+
+      if(root->right!=nullptr){
+	st.push(Level{root->right, depth+1});
+      }
+
+      if(root->left!=nullptr){
+	st.push(Level{root->left, depth+1});
+      }
+    }
+
+    return totalDepth;
+  }
   
   
 };
