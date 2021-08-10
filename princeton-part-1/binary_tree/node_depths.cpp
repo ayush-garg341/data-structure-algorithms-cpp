@@ -20,8 +20,10 @@ public:
   int nodeDepths(Node* root){
     int sum = 0;
     int p = 0;
-    nodeDepthsRecursiveTwo(root, sum, p);
-    return p;
+    //nodeDepthsRecursiveTwo(root, sum, p);
+    //return p;
+    sum = nodeDepthsRecursiveThree(root, 0);
+    return sum;
   }
 
   void nodeDepthsRecursive(Node* root, int sum, int &p){
@@ -64,6 +66,15 @@ public:
       nodeDepthsRecursiveTwo(root->right, sum, p);
     }
     
+  }
+
+
+  int nodeDepthsRecursiveThree(Node *root, int depth){
+    if(root==nullptr){
+      return 0;
+    }
+
+    return depth + nodeDepthsRecursiveThree(root->left, depth+1) + nodeDepthsRecursiveThree(root->right, depth+1);
   }
 
   
