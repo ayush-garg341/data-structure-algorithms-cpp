@@ -25,6 +25,25 @@ class MaxSumSubArrayOfSizeK {
     }
     return maxSum;
   }
+
+
+  static int findMaxSumSubArrayTwo(int k, const vector<int>& arr) {
+    int maxSum = 0;
+    int window_sum = 0;
+    int window_start = 0;
+
+    for(int i = 0; i < arr.size(); i++){
+      window_sum += arr[i];
+
+      if( i >= k-1){
+	maxSum = max(maxSum, window_sum);
+	window_sum -= arr[window_start++];
+      }
+    }
+    
+    return maxSum;
+  }
+  
 };
 
 
@@ -40,6 +59,7 @@ int main(){
 
   cout << soln -> findMaxSumSubArray(k, nums) << endl;
 
+  cout << soln -> findMaxSumSubArrayTwo(k, nums) << endl;
 
   delete soln;
   
