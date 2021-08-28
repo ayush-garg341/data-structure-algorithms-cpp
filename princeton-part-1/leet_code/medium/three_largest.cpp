@@ -29,6 +29,14 @@ public:
   }
 
   void setLargestNumbers(vector<int>&threeLar, int index, int num){
+
+    // below commented code will give wrong results think about it.......
+    // for(int i = index - 1; i >= 0; i--){
+    //   threeLar[i] = threeLar[i+1];
+    // }
+    // threeLar[index] = num;
+
+    
     for(int i = 0; i < index; i++){
       threeLar[i] =  threeLar[i+1];
     }
