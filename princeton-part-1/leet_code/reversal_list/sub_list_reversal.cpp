@@ -44,9 +44,15 @@ public:
     ListNode* reverseHead = reverseList(start);
 
     printList(reverseHead);
-    
-    prev_to_start -> next = reverseHead;
 
+    if(p == 1){
+      prev_to_start = reverseHead;
+      head = prev_to_start;
+    }
+    else{
+      prev_to_start -> next = reverseHead;
+    }
+    
     while(prev_to_start -> next!=nullptr){
       prev_to_start = prev_to_start -> next;
     }
@@ -103,6 +109,9 @@ int main(){
   soln.printList(head);
 
   int p = 2, q = 8;
+
+  // special case of reverse the first "k" elements of a given linked list
+  //p = 1, q = 4;
   
   ListNode* newHead = soln.reverseSubList(head, p, q);
 
