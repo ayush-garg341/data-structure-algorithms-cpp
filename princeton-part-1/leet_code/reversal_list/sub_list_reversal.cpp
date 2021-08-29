@@ -112,6 +112,23 @@ int main(){
 
   // special case of reverse the first "k" elements of a given linked list
   //p = 1, q = 4;
+
+
+  
+  // given a linked list with "n" nodes,  reverse it based on its size in the following way:
+  // 1. If ‘n’ is even, reverse the list in a group of n/2 nodes.
+  // 2. If n is odd, keep the middle node as it is, reverse the first ‘n/2’ nodes and reverse the last ‘n/2’ nodes
+
+  // Solution will use the exact same code, no change in the code base.
+  // 1. When ‘n’ is even we can perform the following steps:
+  //    a. Reverse first ‘n/2’ nodes: head = reverse(head, 1, n/2)
+  //    b. Reverse last ‘n/2’ nodes: head = reverse(head, n/2 + 1, n)
+  
+  // 2. When ‘n’ is odd, our algorithm will look like:
+  //    a. head = reverse(head, 1, n/2)
+  //    b. head = reverse(head, n/2 + 2, n)
+
+  
   
   ListNode* newHead = soln.reverseSubList(head, p, q);
 
