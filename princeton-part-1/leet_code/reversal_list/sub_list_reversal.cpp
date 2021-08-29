@@ -17,15 +17,23 @@ public:
     ListNode* temp = head;
     ListNode* next_to_end = head;
     ListNode* prev_to_start = head;
+
+    int count_p = 1;
+    int count_q = 1;
     
-    while(temp->val != p){
+    while(count_p != p){
+      count_p++;
       prev_to_start = temp;
       temp = temp -> next;
     }
 
     ListNode* start = temp;
 
-    while(temp->val!=q){
+    temp = head;
+    
+    
+    while(count_q != q){
+      count_q++;
       temp = temp->next;
     }
 
@@ -88,12 +96,13 @@ int main(){
   head->next->next->next->next = new ListNode(5);
   head->next->next->next->next->next = new ListNode(6);
   head->next->next->next->next->next->next = new ListNode(7);
+  head->next->next->next->next->next->next->next = new ListNode(7);
   
   Solution soln;
 
   soln.printList(head);
 
-  int p = 2, q = 6;
+  int p = 2, q = 8;
   
   ListNode* newHead = soln.reverseSubList(head, p, q);
 
