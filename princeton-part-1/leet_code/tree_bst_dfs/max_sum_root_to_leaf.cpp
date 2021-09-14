@@ -17,18 +17,18 @@ class TreeNode {
 
 class FindAllTreePaths {
  public:
-  static int findMaxSum(TreeNode *root) {
+  static vector<int> findMaxSum(TreeNode *root) {
     vector<vector<int>> allPaths;
-    int max_sum = 0;
+    vector<int>results;
     int sum = 0;
-    findMaxSumRecursive(root, max_sum, sum);
-    return max_sum;
+    findMaxSumRecursive(root, results, sum);
+    return results;
   }
 
 
 private:
   
-  static void findMaxSumRecursive(TreeNode* root, int& max_sum,  int& sum){
+  static void findMaxSumRecursive(TreeNode* root, vector<int>&results,  int& sum){
     if(root == nullptr){
       return;
     }
@@ -36,14 +36,14 @@ private:
     sum += root -> val;
 
     if(root->left == nullptr && root -> right == nullptr){
-      max_sum = max(max_sum, sum);
+      results.push_back(sum);
     }
     else{
       // go to the left sub-tree
-      findMaxSumRecursive(root->left , max_sum, sum);
+      findMaxSumRecursive(root->left , results, sum);
 
       // go to the right sub tree
-      findMaxSumRecursive(root->right, max_sum, sum);
+      findMaxSumRecursive(root->right, results, sum);
     }
 
     // remove the current node from the path to backtrack,
@@ -61,9 +61,14 @@ int main(int argc, char *argv[]) {
   root->left->left = new TreeNode(4);
   root->right->left = new TreeNode(10);
   root->right->right = new TreeNode(5);
-  int result = FindAllTreePaths::findMaxSum(root);
-  cout << "Max Sum root to leaf " << result << endl;
+  vector<int> results = FindAllTreePaths::findMaxSum(root);
+  cout << "All paths sum, root to leaf " << endl;
+  for(auto sum: results){
+    cout << sum << " ";
+  }
 
+  cout << endl;
+  
   return 0;
   
 }
