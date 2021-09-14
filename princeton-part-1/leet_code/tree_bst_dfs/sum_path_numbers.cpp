@@ -18,25 +18,29 @@ class TreeNode {
 class SumOfPathNumbers {
  public:
   static int findSumOfPathNumbers(TreeNode *root) {
-    int totalPathsSum = 0;
+    // int totalPathsSum = 0;
     // TODO: Write your code here
-    vector<vector<int>>allPaths;
-    vector<int>currentPath;
-    findAllPathsRecursive(root, currentPath, allPaths);
+    // vector<vector<int>>allPaths;
+    // vector<int>currentPath;
+    // findAllPathsRecursive(root, currentPath, allPaths);
 
     
-    for(auto vec: allPaths){
-      int power = 1;
-      int num = 0;
-      for(int i = vec.size()-1; i >= 0; i--){
-	num += vec[i] * power;
-	power *= 10;
-      }
+    // for(auto vec: allPaths){
+    //   int power = 1;
+    //   int num = 0;
+    //   for(int i = vec.size()-1; i >= 0; i--){
+    // 	num += vec[i] * power;
+    // 	power *= 10;
+    //   }
 
-      totalPathsSum += num;
-    }
+    //   totalPathsSum += num;
+    // }
+
     
-    return totalPathsSum;
+    
+    // return totalPathsSum;
+
+    return findAllPathNumberSum(root, 0);
   }
 
 
@@ -58,6 +62,21 @@ private:
     }
     
     currentPath.pop_back();
+  }
+
+  static int findAllPathNumberSum(TreeNode* root, int pathSum){
+    if(root == nullptr){
+      return 0;
+    }
+
+    pathSum = 10*pathSum + root -> val;
+
+    if(root->left == nullptr && root -> right == nullptr){
+      return pathSum;
+    }
+
+    return findAllPathNumberSum(root->left, pathSum) + findAllPathNumberSum(root-> right, pathSum);
+    
   }
   
 };
